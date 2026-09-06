@@ -1,6 +1,6 @@
 import { INodeProperties } from 'n8n-workflow';
 import { baileysFields } from './baileys.fields';
-import { baileysOperations } from './baileys.operations';
+import { baileysOperations, baileysResourceByGroup } from './baileys.operations';
 import { eventsFields as eventsFields } from './events.fields';
 import { instancesFields } from './instances.fields';
 import { integrationsFields as integrationsFields } from './integrations.fields';
@@ -43,7 +43,35 @@ const resourcesOptions: INodeProperties = {
 			value: 'profile-api',
 		},
 		{
-			name: 'Baileys Method',
+			name: 'Baileys: Account & Privacy',
+			value: baileysResourceByGroup.account,
+		},
+		{
+			name: 'Baileys: Business & Catalog',
+			value: baileysResourceByGroup.business,
+		},
+		{
+			name: 'Baileys: Call & Message',
+			value: baileysResourceByGroup.messages,
+		},
+		{
+			name: 'Baileys: Community',
+			value: baileysResourceByGroup.communities,
+		},
+		{
+			name: 'Baileys: Group',
+			value: baileysResourceByGroup.groups,
+		},
+		{
+			name: 'Baileys: Newsletter',
+			value: baileysResourceByGroup.newsletters,
+		},
+		{
+			name: 'Baileys: Advanced Protocol',
+			value: baileysResourceByGroup.advanced,
+		},
+		{
+			name: 'Baileys: All Methods (Legacy)',
 			value: 'baileys-api',
 		},
 		{
@@ -72,7 +100,7 @@ export const evolutionNodeProperties = [
 	integrationsOperationsOptions,
 	// Available functions when "Profile" resource is selected
 	profileOperationsOptions,
-	baileysOperations,
+	...baileysOperations,
 	// Available functions when "Chat" resource is selected
 	chatOperations,
 	// Available fields when resource and operation are selected

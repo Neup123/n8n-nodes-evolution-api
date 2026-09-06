@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-evolution-api-en",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Unofficial Evolution API node for n8n with Baileys 7 method support",
   "keywords": [
     "n8n-community-node-package"
@@ -39,7 +39,7 @@
       "dist/credentials/EvolutionApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/EvolutionApi/EvolutionApi.node.js"
+      "dist/nodes/EvolutionApi/EvolutionApiBaileys7.node.js"
     ]
   },
   "devDependencies": {

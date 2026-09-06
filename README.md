@@ -5,8 +5,10 @@ This is an unofficial WhatsApp API node for n8n, with direct support for the Bai
 
 ## Baileys operations
 
-Choose the **Baileys Method** resource, select a grouped `WASocket` method, and enter the connected Evolution API
-instance. The node displays a typed field for every method argument. Enum arguments are dropdowns; for example,
+Choose a focused Baileys resource: **Account & Privacy**, **Business & Catalog**, **Call & Message**, **Community**,
+**Group**, **Newsletter**, or **Advanced Protocol**. Then select the WhatsApp operation and the connected Evolution API
+instance. Every operation has a practical explanation. The node displays a named field for every method argument,
+string lists can be entered as repeated values, and enum arguments are dropdowns; for example,
 `communityParticipantsUpdate` shows `jid`, `participants`, and an `action` dropdown.
 
 ```json
@@ -39,7 +41,7 @@ For an existing Docker container:
 ```bash
 docker exec -u node -it <your-n8n-container> sh -lc \
   'mkdir -p ~/.n8n/custom && cd ~/.n8n/custom && npm install \
-  https://github.com/Neup123/n8n-nodes-evolution-api/releases/download/v1.2.2/n8n-nodes-evolution-api-en-1.2.2.tgz \
+  https://github.com/Neup123/n8n-nodes-evolution-api/releases/download/v1.2.3/n8n-nodes-evolution-api-en-1.2.3.tgz \
   --ignore-scripts'
 docker restart <your-n8n-container>
 ```
@@ -50,7 +52,7 @@ For an existing non-Docker, self-hosted n8n:
 mkdir -p ~/.n8n/custom
 cd ~/.n8n/custom
 npm install \
-  https://github.com/Neup123/n8n-nodes-evolution-api/releases/download/v1.2.2/n8n-nodes-evolution-api-en-1.2.2.tgz \
+  https://github.com/Neup123/n8n-nodes-evolution-api/releases/download/v1.2.3/n8n-nodes-evolution-api-en-1.2.3.tgz \
   --ignore-scripts
 ```
 
