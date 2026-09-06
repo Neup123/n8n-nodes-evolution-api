@@ -1,4 +1,6 @@
 import { INodeProperties } from 'n8n-workflow';
+import { baileysFields } from './baileys.fields';
+import { baileysOperations } from './baileys.operations';
 import { eventsFields as eventsFields } from './events.fields';
 import { instancesFields } from './instances.fields';
 import { integrationsFields as integrationsFields } from './integrations.fields';
@@ -41,6 +43,10 @@ const resourcesOptions: INodeProperties = {
 			value: 'profile-api',
 		},
 		{
+			name: 'Baileys',
+			value: 'baileys-api',
+		},
+		{
 			name: 'Event',
 			value: 'events-api',
 		},
@@ -66,6 +72,7 @@ export const evolutionNodeProperties = [
 	integrationsOperationsOptions,
 	// Available functions when "Profile" resource is selected
 	profileOperationsOptions,
+	baileysOperations,
 	// Available functions when "Chat" resource is selected
 	chatOperations,
 	// Available fields when resource and operation are selected
@@ -76,4 +83,5 @@ export const evolutionNodeProperties = [
 	...integrationsFields,
 	...chatFields,
 	...profileFields,
+	...baileysFields,
 ];
