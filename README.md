@@ -29,14 +29,31 @@ available for compatibility.
 
 ## Install in n8n
 
-For a self-hosted npm installation, stop n8n, install this GitHub fork in the n8n nodes directory, and restart n8n:
+The n8n **Install community nodes** screen only accepts package names published to the npm registry. This fork is not
+published to npm yet, so install its prebuilt GitHub Release package from the CLI instead. This adds only the node to
+your existing n8n installation; it does not install another n8n instance.
+
+For an existing Docker container:
 
 ```bash
-cd ~/.n8n/nodes
-npm install github:Neup123/n8n-nodes-evolution-api
+docker exec -u node -it <your-n8n-container> sh -lc \
+  'mkdir -p ~/.n8n/nodes && cd ~/.n8n/nodes && npm install \
+  https://github.com/Neup123/n8n-nodes-evolution-api/releases/download/v1.2.1/n8n-nodes-evolution-api-en-1.2.1.tgz \
+  --ignore-scripts'
+docker restart <your-n8n-container>
 ```
 
-For Docker Compose, use the prebuilt image that contains n8n and this node:
+For an existing non-Docker, self-hosted n8n:
+
+```bash
+mkdir -p ~/.n8n/nodes
+cd ~/.n8n/nodes
+npm install \
+  https://github.com/Neup123/n8n-nodes-evolution-api/releases/download/v1.2.1/n8n-nodes-evolution-api-en-1.2.1.tgz \
+  --ignore-scripts
+```
+
+Restart n8n after installation. As an optional alternative, the prebuilt image below contains n8n and this node:
 
 ```yaml
 services:

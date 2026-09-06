@@ -2,6 +2,7 @@ node_modules
 .DS_Store
 .tmp
 tmp
+.tmp-package-test
 dist
 npm-debug.log*
 yarn.lock
