@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-evolution-api-en",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Unofficial Evolution API node for n8n with Baileys 7 method support",
   "keywords": [
     "n8n-community-node-package"
@@ -47,7 +47,7 @@
     "eslint": "^8.3.0",
     "eslint-plugin-n8n-nodes-base": "^1.16.1",
     "gulp": "^5.0.0",
-    "n8n-workflow": "*",
+    "n8n-workflow": "1.48.0",
     "prettier": "^3.3.2",
     "typescript": "^5.5.3"
   },
