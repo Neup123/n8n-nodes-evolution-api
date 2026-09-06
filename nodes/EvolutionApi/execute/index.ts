@@ -63,6 +63,8 @@ import { removeProfilePicture } from './profile/removeProfilePicture';
 import { fetchPrivacySettings } from './profile/fetchPrivacySettings';
 import { updatePrivacySettings } from './profile/updatePrivacySettings';
 import { joinGroup } from './groups/joinGroup';
+import { invokeBaileys } from './baileys/invokeBaileys';
+import { baileysMethodNames } from '../properties/baileys.operations';
 type ResourceOperationFunctions = {
 	[resource: string]: {
 		[operation: string]: (ef: IExecuteFunctions) => Promise<any>;
@@ -71,6 +73,7 @@ type ResourceOperationFunctions = {
 
 // este dicionario é utilizado para mapear as operações disponíveis para cada recurso e operação para cada função
 export const resourceOperationsFunctions: ResourceOperationFunctions = {
+	'baileys-api': Object.fromEntries(baileysMethodNames.map((method) => [method, invokeBaileys])),
 	'instances-api': {
 		'instance-basic': createInstanceBasic,
 		'instance-connect': instanceConnect,

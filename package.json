@@ -1,19 +1,19 @@
 {
   "name": "n8n-nodes-evolution-api-en",
-  "version": "1.0.2",
-  "description": "Unofficial WhatsApp API Node for n8n (English Translation) translated from n8n-nodes-evolution-api",
+  "version": "1.1.0",
+  "description": "Unofficial Evolution API node for n8n with Baileys 7 method support",
   "keywords": [
     "n8n-community-node-package"
   ],
   "license": "MIT",
-  "homepage": "",
+  "homepage": "https://github.com/Neup123/n8n-nodes-evolution-api",
   "author": {
     "name": "dhi9",
     "email": "rizkyadhicom+npmjs.com@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dhi9/n8n-nodes-evolution-api-en.git"
+    "url": "https://github.com/Neup123/n8n-nodes-evolution-api.git"
   },
   "engines": {
     "node": ">=18.10",
