@@ -137,7 +137,7 @@ export async function setFlowiseBot(ef: IExecuteFunctions) {
 			const errorData = {
 				success: false,
 				error: {
-					message: 'Operação do Flowise não reconhecida',
+					message: 'Unrecognized Flowise operation',
 					details: 'A operação solicitada não é válida para o recurso do Flowise',
 					code: 'INVALID_OPERATION',
 					timestamp: new Date().toISOString(),

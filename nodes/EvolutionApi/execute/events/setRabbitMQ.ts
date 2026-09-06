@@ -40,7 +40,7 @@ export async function setRabbitMQ(ef: IExecuteFunctions) {
 			const errorData = {
 				success: false,
 				error: {
-					message: 'Operação de RabbitMQ não reconhecida',
+					message: 'Unrecognized RabbitMQ operation',
 					details: 'A operação solicitada não é válida para o recurso de RabbitMQ',
 					code: 'INVALID_OPERATION',
 					timestamp: new Date().toISOString(),

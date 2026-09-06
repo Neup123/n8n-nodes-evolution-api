@@ -1,7 +1,7 @@
 import { INodeProperties } from 'n8n-workflow';
 
 export const profileOperationsOptions: INodeProperties = {
-    displayName: 'Operação',
+    displayName: 'Operation',
     name: 'operation',
     type: 'options',
     noDataExpression: true,
@@ -12,16 +12,16 @@ export const profileOperationsOptions: INodeProperties = {
     },
     options: [
         {
-            name: 'Buscar Perfil',
+            name: 'Fetch Profile',
             value: 'fetch-profile',
-            description: 'Busca informações do perfil',
-            action: 'Buscar perfil',
+            description: 'Fetches profile information',
+            action: 'Fetch profile',
         },
         {
-            name: 'Buscar Perfil Profissional',
+            name: 'Fetch Business Profile',
             value: 'fetch-business-profile',
-            description: 'Busca informações do perfil profissional',
-            action: 'Buscar perfil profissional',
+            description: 'Fetches business profile information',
+            action: 'Fetch business profile',
         },
         {
             name: 'Update Profile Name',

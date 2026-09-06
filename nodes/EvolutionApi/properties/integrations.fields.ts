@@ -497,7 +497,7 @@ export const integrationsFields: INodeProperties[] = [
 		displayName: 'Keyword To Finish',
 		name: 'unknownMessage',
 		type: 'string',
-		default: 'Mensagem não reconhecida',
+		default: 'Unrecognized message',
 		required: true,
 		description: 'Enter the word/phrase that will be used to close the bot',
 		displayOptions: {
@@ -903,7 +903,7 @@ export const integrationsFields: INodeProperties[] = [
 		displayName: 'Keyword To Finish',
 		name: 'unknownMessage',
 		type: 'string',
-		default: 'Mensagem não reconhecida',
+		default: 'Unrecognized message',
 		required: true,
 		description: 'Enter the word/phrase that will be used to close the bot',
 		displayOptions: {
@@ -1286,7 +1286,7 @@ export const integrationsFields: INodeProperties[] = [
 		displayName: 'Keyword To Finish',
 		name: 'unknownMessage',
 		type: 'string',
-		default: 'Mensagem não reconhecida',
+		default: 'Unrecognized message',
 		required: true,
 		description: 'Enter the word/phrase that will be used to close the bot',
 		displayOptions: {
@@ -1633,7 +1633,7 @@ export const integrationsFields: INodeProperties[] = [
 		displayName: 'Keyword To Finish',
 		name: 'unknownMessage',
 		type: 'string',
-		default: 'Mensagem não reconhecida',
+		default: 'Unrecognized message',
 		required: true,
 		description: 'Enter the word/phrase that will be used to close the bot',
 		displayOptions: {

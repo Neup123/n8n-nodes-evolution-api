@@ -65,7 +65,7 @@ export async function setChatwoot(ef: IExecuteFunctions) {
 			const errorData = {
 				success: false,
 				error: {
-					message: 'Operação do Chatwoot não reconhecida',
+					message: 'Unrecognized Chatwoot operation',
 					details: 'A operação solicitada não é válida para o recurso do Chatwoot',
 					code: 'INVALID_OPERATION',
 					timestamp: new Date().toISOString(),

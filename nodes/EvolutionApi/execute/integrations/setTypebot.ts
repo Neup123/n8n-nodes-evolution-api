@@ -154,7 +154,7 @@ export async function setTypebot(ef: IExecuteFunctions) {
 			const errorData = {
 				success: false,
 				error: {
-					message: 'Operação do Typebot não reconhecida',
+					message: 'Unrecognized Typebot operation',
 					details: 'A operação solicitada não é válida para o recurso do Typebot',
 					code: 'INVALID_OPERATION',
 					timestamp: new Date().toISOString(),

@@ -128,7 +128,7 @@ export async function setDifyBot(ef: IExecuteFunctions) {
 			const errorData = {
 				success: false,
 				error: {
-					message: 'Operação do Dify não reconhecida',
+					message: 'Unrecognized Dify operation',
 						details: 'A operação solicitada não é válida para o recurso do Dify',
 						code: 'INVALID_OPERATION',
 						timestamp: new Date().toISOString(),
