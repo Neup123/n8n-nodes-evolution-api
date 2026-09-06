@@ -46,7 +46,7 @@ export async function setWebhook(ef: IExecuteFunctions) {
 			const errorData = {
 				success: false,
 				error: {
-					message: 'Operação de webhook não reconhecida',
+					message: 'Unrecognized webhook operation',
 					details: 'A operação solicitada não é válida para o recurso de webhook',
 					code: 'INVALID_OPERATION',
 					timestamp: new Date().toISOString(),

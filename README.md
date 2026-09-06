@@ -30,15 +30,16 @@ available for compatibility.
 ## Install in n8n
 
 The n8n **Install community nodes** screen only accepts package names published to the npm registry. This fork is not
-published to npm yet, so install its prebuilt GitHub Release package from the CLI instead. This adds only the node to
-your existing n8n installation; it does not install another n8n instance.
+published to npm yet, so install its prebuilt GitHub Release package as a custom extension instead. This avoids the
+community-package reconciler removing a package that was not installed from npm. It adds only the node to your
+existing n8n installation; it does not install another n8n instance.
 
 For an existing Docker container:
 
 ```bash
 docker exec -u node -it <your-n8n-container> sh -lc \
-  'mkdir -p ~/.n8n/nodes && cd ~/.n8n/nodes && npm install \
-  https://github.com/Neup123/n8n-nodes-evolution-api/releases/download/v1.2.1/n8n-nodes-evolution-api-en-1.2.1.tgz \
+  'mkdir -p ~/.n8n/custom && cd ~/.n8n/custom && npm install \
+  https://github.com/Neup123/n8n-nodes-evolution-api/releases/download/v1.2.2/n8n-nodes-evolution-api-en-1.2.2.tgz \
   --ignore-scripts'
 docker restart <your-n8n-container>
 ```
@@ -46,10 +47,10 @@ docker restart <your-n8n-container>
 For an existing non-Docker, self-hosted n8n:
 
 ```bash
-mkdir -p ~/.n8n/nodes
-cd ~/.n8n/nodes
+mkdir -p ~/.n8n/custom
+cd ~/.n8n/custom
 npm install \
-  https://github.com/Neup123/n8n-nodes-evolution-api/releases/download/v1.2.1/n8n-nodes-evolution-api-en-1.2.1.tgz \
+  https://github.com/Neup123/n8n-nodes-evolution-api/releases/download/v1.2.2/n8n-nodes-evolution-api-en-1.2.2.tgz \
   --ignore-scripts
 ```
 
