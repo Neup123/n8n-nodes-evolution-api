@@ -17,7 +17,7 @@ export const baileysResourceByGroup: Record<string, string> = Object.fromEntries
 );
 
 const methodDescriptions: Record<string, string> = {
-	communityMetadata: 'Get the name, description, participants, and settings of a community.',
+	communityMetadata: 'Get a parent community name, description, participants, and settings. Use Group Metadata for regular groups.',
 	communityCreate: 'Create a WhatsApp community with a subject and description.',
 	communityCreateGroup: 'Create a group inside an existing community and add participants.',
 	groupMetadata: 'Get the subject, description, owner, participants, and settings of a group.',

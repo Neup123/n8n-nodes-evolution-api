@@ -40,6 +40,12 @@ const parameterLabels: Record<string, string> = {
 
 function parameterDescription(method: string, parameter: ParameterDefinition) {
 	const name = parameter.name;
+	if (method.startsWith('community') && ['jid', 'communityJid', 'parentCommunityJid'].includes(name)) {
+		return 'Parent community JID ending in @g.us. A regular group or subgroup JID is not accepted unless the operation explicitly says otherwise';
+	}
+	if (method.startsWith('group') && ['jid', 'id', 'groupJid'].includes(name)) {
+		return 'WhatsApp group JID ending in @g.us';
+	}
 	if (['jid', 'id', 'to'].includes(name)) return 'Full WhatsApp address, for example 15551234567@s.whatsapp.net or 120363000000000000@g.us.';
 	if (/participants?/i.test(name)) return 'One or more participant WhatsApp JIDs, including the @s.whatsapp.net suffix.';
 	if (/inviteCode/i.test(name)) return 'Invite code only, without the https://chat.whatsapp.com/ URL prefix.';
@@ -54,9 +60,17 @@ function parameterDescription(method: string, parameter: ParameterDefinition) {
 		: `${titleCase(name)} used by ${titleCase(method)}.`;
 }
 
+function parameterLabel(method: string, name: string) {
+	if (method.startsWith('community') && ['jid', 'communityJid', 'parentCommunityJid'].includes(name)) {
+		return name === 'parentCommunityJid' ? 'Parent Community JID' : 'Community JID';
+	}
+	if (method.startsWith('group') && ['jid', 'id', 'groupJid'].includes(name)) return 'Group JID';
+	return parameterLabels[name] ?? titleCase(name);
+}
+
 function parameterField(method: string, parameter: ParameterDefinition): INodeProperties {
 	const common = {
-		displayName: parameterLabels[parameter.name] ?? titleCase(parameter.name),
+		displayName: parameterLabel(method, parameter.name),
 		name: baileysParameterFieldName(method, parameter.name),
 		required: parameter.required,
 		description: parameterDescription(method, parameter),
