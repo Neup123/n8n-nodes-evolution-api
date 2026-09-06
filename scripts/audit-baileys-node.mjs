@@ -4,9 +4,20 @@ const require = createRequire(import.meta.url);
 const { EvolutionApiBaileys7 } = require('../dist/nodes/EvolutionApi/EvolutionApiBaileys7.node.js');
 const { BAILEYS_METHOD_METADATA } = require('../dist/nodes/EvolutionApi/properties/baileys.metadata.js');
 const { executeBaileysMethod, normalizeStringArray } = require('../dist/nodes/EvolutionApi/execute/baileys/invokeBaileys.js');
+const { resourceOperationsFunctions } = require('../dist/nodes/EvolutionApi/execute/index.js');
 
 const properties = new EvolutionApiBaileys7().description.properties;
 const failures = [];
+
+for (const selector of properties.filter((property) => property.name === 'operation')) {
+	for (const resource of selector.displayOptions?.show?.resource ?? []) {
+		for (const operation of selector.options ?? []) {
+			if (typeof resourceOperationsFunctions[resource]?.[operation.value] !== 'function') {
+				failures.push(`${resource}/${operation.value}: operation has no executor`);
+			}
+		}
+	}
+}
 
 for (const [method, definition] of Object.entries(BAILEYS_METHOD_METADATA)) {
 	const resource = `baileys-${definition.group}`;

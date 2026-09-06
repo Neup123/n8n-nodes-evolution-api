@@ -111,7 +111,7 @@ export const resourceOperationsFunctions: ResourceOperationFunctions = {
 		'typebot': setTypebot,
 		'evolution-bot': setEvolutionBot,
 		'difyBot': setDifyBot,
-		'flowise-bot': setFlowiseBot,
+		flowiseBot: setFlowiseBot,
 	},
 	'groups-api': {
 		'create-group': createGroup,
