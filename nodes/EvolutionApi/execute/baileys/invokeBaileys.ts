@@ -15,7 +15,7 @@ function parseJsonParameter(ef: IExecuteFunctions, name: string, value: unknown)
 	}
 }
 
-export async function invokeBaileys(ef: IExecuteFunctions) {
+export async function executeBaileysMethod(ef: IExecuteFunctions) {
 	const instanceName = ef.getNodeParameter('instanceName', 0) as string;
 	const method = ef.getNodeParameter('operation', 0) as MethodName;
 	const definition = BAILEYS_METHOD_METADATA[method];
