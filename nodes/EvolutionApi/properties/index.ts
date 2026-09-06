@@ -43,7 +43,7 @@ const resourcesOptions: INodeProperties = {
 			value: 'profile-api',
 		},
 		{
-			name: 'Baileys',
+			name: 'Baileys Method',
 			value: 'baileys-api',
 		},
 		{
