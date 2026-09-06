@@ -25,8 +25,15 @@ export class EvolutionApiBaileys7 implements INodeType {
 	};
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
-		const resource = this.getNodeParameter('resource', 0) as string;
-		const operation = this.getNodeParameter('operation', 0) as string;
+		const savedParameters = this.getNode().parameters as Record<string, unknown>;
+		const resource = savedParameters.resource as string | undefined;
+		const operation = savedParameters.operation as string | undefined;
+		if (!resource || !operation) {
+			throw new NodeApiError(this.getNode(), {
+				message: 'Resource or operation is missing',
+				description: 'Open this node, select its resource and operation again, then save the workflow.',
+			});
+		}
 		const fn = resourceOperationsFunctions[resource]?.[operation];
 		if (!fn) {
 			throw new NodeApiError(this.getNode(), {

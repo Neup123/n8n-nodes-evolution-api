@@ -47,7 +47,7 @@ function parameterDescription(method: string, parameter: ParameterDefinition) {
 		return 'WhatsApp group JID ending in @g.us';
 	}
 	if (['jid', 'id', 'to'].includes(name)) return 'Full WhatsApp address, for example 15551234567@s.whatsapp.net or 120363000000000000@g.us.';
-	if (/participants?/i.test(name)) return 'One or more participant WhatsApp JIDs, including the @s.whatsapp.net suffix.';
+	if (/participants?/i.test(name)) return 'Add one WhatsApp JID per value. Both @s.whatsapp.net and @lid participant identifiers are accepted.';
 	if (/inviteCode/i.test(name)) return 'Invite code only, without the https://chat.whatsapp.com/ URL prefix.';
 	if (/messageId/i.test(name)) return 'WhatsApp message identifier from the message key.';
 	if (name === 'action') return `Action to perform when running ${titleCase(method)}.`;
