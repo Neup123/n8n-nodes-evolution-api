@@ -29,6 +29,17 @@ The node calls `POST /baileys/<group>/<method>/:instanceName`. See the Evolution
 query `GET /baileys/methods/:instanceName` for the live method registry. The old ordered-argument routes remain
 available for compatibility.
 
+## Building webhook workflows
+
+This fork provides a dedicated AsyncAPI contract—the webhook/event equivalent of Swagger—with all 49 Evolution webhook
+events, complete HTTP envelopes, event-specific `data` schemas, allowed values, examples, and useful n8n expressions.
+Open `/webhooks/docs` on your Evolution API server, or read the
+[webhook payload guide](https://github.com/Neup123/evolution-api/blob/main/docs/webhooks.md).
+
+For a single n8n Webhook node, use its production `/webhook/` URL and leave **Webhook by event** disabled. Route events
+with a Switch node using `{{$json.event}}`. When Webhook by event is enabled, Evolution appends a suffix such as
+`/messages-upsert`, so n8n needs an exact route for every enabled suffix.
+
 ## Install in n8n
 
 The n8n **Install community nodes** screen only accepts package names published to the npm registry. This fork is not
@@ -41,7 +52,7 @@ For an existing Docker container:
 ```bash
 docker exec -u node -it <your-n8n-container> sh -lc \
   'mkdir -p ~/.n8n/custom && cd ~/.n8n/custom && npm install \
-  https://github.com/Neup123/n8n-nodes-evolution-api/releases/download/v1.2.6/n8n-nodes-evolution-api-en-1.2.6.tgz \
+  https://github.com/Neup123/n8n-nodes-evolution-api/releases/download/v1.2.7/n8n-nodes-evolution-api-en-1.2.7.tgz \
   --ignore-scripts'
 docker restart <your-n8n-container>
 ```
@@ -52,7 +63,7 @@ For an existing non-Docker, self-hosted n8n:
 mkdir -p ~/.n8n/custom
 cd ~/.n8n/custom
 npm install \
-  https://github.com/Neup123/n8n-nodes-evolution-api/releases/download/v1.2.6/n8n-nodes-evolution-api-en-1.2.6.tgz \
+  https://github.com/Neup123/n8n-nodes-evolution-api/releases/download/v1.2.7/n8n-nodes-evolution-api-en-1.2.7.tgz \
   --ignore-scripts
 ```
 
