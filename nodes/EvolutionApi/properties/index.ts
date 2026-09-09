@@ -1,5 +1,7 @@
 import { INodeProperties } from 'n8n-workflow';
 import { baileysFields } from './baileys.fields';
+import { archiveFields } from './archive.fields';
+import { archiveOperations } from './archive.operations';
 import { baileysOperations, baileysResourceByGroup } from './baileys.operations';
 import { eventsFields as eventsFields } from './events.fields';
 import { instancesFields } from './instances.fields';
@@ -41,6 +43,10 @@ const resourcesOptions: INodeProperties = {
 		{
 			name: 'Profile',
 			value: 'profile-api',
+		},
+		{
+			name: 'WhatsApp Archive',
+			value: 'archive-api',
 		},
 		{
 			name: 'Baileys: Account & Privacy',
@@ -100,6 +106,7 @@ export const evolutionNodeProperties = [
 	integrationsOperationsOptions,
 	// Available functions when "Profile" resource is selected
 	profileOperationsOptions,
+	archiveOperations,
 	...baileysOperations,
 	// Available functions when "Chat" resource is selected
 	chatOperations,
@@ -112,4 +119,5 @@ export const evolutionNodeProperties = [
 	...chatFields,
 	...profileFields,
 	...baileysFields,
+	...archiveFields,
 ];

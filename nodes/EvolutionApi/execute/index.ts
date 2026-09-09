@@ -65,6 +65,7 @@ import { updatePrivacySettings } from './profile/updatePrivacySettings';
 import { joinGroup } from './groups/joinGroup';
 import { executeBaileysMethod } from './baileys/invokeBaileys';
 import { baileysMethodNames } from '../properties/baileys.operations';
+import { archiveOperation } from './archive/archiveOperation';
 type ResourceOperationFunctions = {
 	[resource: string]: {
 		[operation: string]: (ef: IExecuteFunctions) => Promise<any>;
@@ -73,9 +74,44 @@ type ResourceOperationFunctions = {
 
 // Map every resource and operation to its execution function.
 export const resourceOperationsFunctions: ResourceOperationFunctions = {
+	'archive-api': Object.fromEntries(
+		[
+			'status',
+			'events',
+			'messages',
+			'contacts',
+			'chats',
+			'groups',
+			'media',
+			'message-revisions',
+			'receipts',
+			'reactions',
+			'memberships',
+			'calls',
+			'sync-gaps',
+			'list-policies',
+			'put-policy',
+			'backfill',
+			'preview-purge',
+			'confirm-purge',
+			'tombstones',
+			'verify',
+		].map((operation) => [operation, archiveOperation]),
+	),
 	...Object.fromEntries(
-		['baileys-api', 'baileys-communities', 'baileys-business', 'baileys-messages', 'baileys-newsletters', 'baileys-groups', 'baileys-account', 'baileys-advanced']
-			.map((resource) => [resource, Object.fromEntries(baileysMethodNames.map((method) => [method, executeBaileysMethod]))]),
+		[
+			'baileys-api',
+			'baileys-communities',
+			'baileys-business',
+			'baileys-messages',
+			'baileys-newsletters',
+			'baileys-groups',
+			'baileys-account',
+			'baileys-advanced',
+		].map((resource) => [
+			resource,
+			Object.fromEntries(baileysMethodNames.map((method) => [method, executeBaileysMethod])),
+		]),
 	),
 	'instances-api': {
 		'instance-basic': createInstanceBasic,
@@ -103,14 +139,14 @@ export const resourceOperationsFunctions: ResourceOperationFunctions = {
 		'send-reaction': sendReaction,
 	},
 	'events-api': {
-		'webhook': setWebhook,
-		'rabbitmq': setRabbitMQ,
+		webhook: setWebhook,
+		rabbitmq: setRabbitMQ,
 	},
 	'integrations-api': {
-		'chatwoot': setChatwoot,
-		'typebot': setTypebot,
+		chatwoot: setChatwoot,
+		typebot: setTypebot,
 		'evolution-bot': setEvolutionBot,
-		'difyBot': setDifyBot,
+		difyBot: setDifyBot,
 		flowiseBot: setFlowiseBot,
 	},
 	'groups-api': {
