@@ -17,7 +17,7 @@ export async function findContacts(ef: IExecuteFunctions) {
             const remoteJid = ef.getNodeParameter('remoteJid', 0) as string;
             body = {
                 where: {
-                    id: remoteJid.includes('@') ? remoteJid : `${remoteJid}@s.whatsapp.net`,
+                    remoteJid: remoteJid.includes('@') ? remoteJid : `${remoteJid}@s.whatsapp.net`,
                 },
             };
         }

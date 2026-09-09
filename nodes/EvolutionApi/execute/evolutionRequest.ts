@@ -4,6 +4,7 @@ export async function evolutionRequest(ef: IExecuteFunctions, options: IRequestO
 	const credentials = await ef.getCredentials('evolutionApi');
 	const serverUrl = credentials['server-url'];
 	const apiKey = credentials.apikey;
+	const live = ef.getNodeParameter('live', 0, false) === true;
 
 	const requestOptions: IRequestOptions = {
 		...options,
@@ -12,6 +13,7 @@ export async function evolutionRequest(ef: IExecuteFunctions, options: IRequestO
 			...(options.headers || {}),
 		},
 		uri: `${serverUrl}${options.uri}`,
+		qs: live ? { ...(options.qs || {}), live: true } : options.qs,
 	};
 
 	return await ef.helpers.request(requestOptions);

@@ -51,6 +51,7 @@ export async function executeBaileysMethod(ef: IExecuteFunctions) {
 	}
 	const definition = BAILEYS_METHOD_METADATA[method];
 	const body: Record<string, unknown> = {};
+	const live = ef.getNodeParameter('live', 0, false) === true;
 
 	for (const parameter of definition.parameters) {
 		const fieldName = baileysParameterFieldName(method, parameter.name);
@@ -69,6 +70,7 @@ export async function executeBaileysMethod(ef: IExecuteFunctions) {
 				? parseJsonParameter(ef, parameter.name, value)
 				: value;
 	}
+	if (live) body.live = true;
 
 	const requestOptions: IRequestOptions = {
 		method: 'POST' as IHttpRequestMethods,

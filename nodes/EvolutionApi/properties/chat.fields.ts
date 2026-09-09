@@ -1,6 +1,16 @@
 import { INodeProperties, NodePropertyTypes } from 'n8n-workflow';
 
 export const chatFields: INodeProperties[] = [
+	{
+		displayName: 'Force Live WhatsApp Read',
+		name: 'live',
+		type: 'boolean' as NodePropertyTypes,
+		default: false,
+		description: 'Whether to bypass the Evolution API local snapshot and query WhatsApp now',
+		displayOptions: {
+			show: { resource: ['chat-api'], operation: ['check-number', 'fetch-profile-picture'] },
+		},
+	},
 	// Common fields for all operations
 	{
 		displayName: 'Instance Name',
