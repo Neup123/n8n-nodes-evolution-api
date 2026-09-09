@@ -9,25 +9,25 @@ import { evolutionRequest } from '../evolutionRequest';
 
 export async function sendDocument(ef: IExecuteFunctions) {
 	try {
-		// Parâmetros obrigatórios
+		// Required parameters
 		const instanceName = ef.getNodeParameter('instanceName', 0) as string;
 		const remoteJid = ef.getNodeParameter('remoteJid', 0) as string;
 		const media = ef.getNodeParameter('media', 0) as string;
 
-		// Validação do campo media
+		// Validate the media field
 		if (!media.startsWith('http') && !media.startsWith('data:')) {
 			throw new NodeApiError(ef.getNode(), {
-				message: 'Formato de mídia inválido',
-				description: 'O documento deve ser uma URL válida ou um base64',
+				message: 'Invalid media format',
+				description: 'The document must be a valid URL or Base64 value',
 			});
 		}
 
-		// Parâmetros opcionais com valores padrão
+		// Optional parameters with default values
 		const mimetype = (ef.getNodeParameter('mimetype', 0, 'application/pdf') as string) || 'application/pdf';
 		const caption = ef.getNodeParameter('caption', 0, '') as string;
 		const fileName = (ef.getNodeParameter('fileName', 0, 'document.pdf') as string) || 'document.pdf';
 
-		// Opções adicionais
+		// Additional options
 		const options = ef.getNodeParameter('options_message', 0, {}) as {
 			delay?: number;
 			quoted?: {
@@ -94,10 +94,10 @@ export async function sendDocument(ef: IExecuteFunctions) {
 			success: false,
 			error: {
 				message: error.message.includes('Could not get parameter')
-					? 'Parâmetros inválidos ou ausentes'
-					: 'Erro ao enviar documento',
+					? 'Invalid or missing parameters'
+					: 'Error sending document',
 				details: error.message.includes('Could not get parameter')
-					? 'Verifique se todos os campos obrigatórios foram preenchidos corretamente'
+					? 'Verify that all required fields were completed correctly'
 					: error.message,
 				code: error.code || 'UNKNOWN_ERROR',
 				timestamp: new Date().toISOString(),

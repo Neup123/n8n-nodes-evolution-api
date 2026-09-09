@@ -8,7 +8,7 @@ import { evolutionRequest } from '../evolutionRequest';
 
 export async function sendStories(ef: IExecuteFunctions) {
 	try {
-		// Parâmetros obrigatórios
+		// Required parameters
 		const instanceName = ef.getNodeParameter('instanceName', 0) as string;
 		const content = ef.getNodeParameter('content', 0) as string;
 		const type = ef.getNodeParameter('type', 0) as 'text' | 'image' | 'video' | 'audio';
@@ -17,13 +17,13 @@ export async function sendStories(ef: IExecuteFunctions) {
 		const backgroundColor = ef.getNodeParameter('backgroundColor', 0, '#000000') as string;
 		const font = ef.getNodeParameter('font', 0, 1) as number;
 
-		// Validação da URL do conteúdo para tipos não texto
+		// Validate the content URL for non-text types
 		if (type !== 'text' && !content.startsWith('http') && !content.startsWith('data:')) {
 			const errorData = {
 				success: false,
 				error: {
-					message: 'Formato de conteúdo inválido',
-					details: 'O conteúdo deve ser uma URL válida ou um base64',
+					message: 'Invalid content format',
+					details: 'The content must be a valid URL or Base64 value',
 					code: 'INVALID_CONTENT_FORMAT',
 					timestamp: new Date().toISOString(),
 				},
@@ -42,12 +42,12 @@ export async function sendStories(ef: IExecuteFunctions) {
 			allContacts
 		};
 
-		// Adiciona caption apenas para imagem ou vídeo
+		// Add a caption only for images or videos
 		if ((type === 'image' || type === 'video') && caption) {
 			body.caption = caption;
 		}
 
-		// Se não for para todos os contatos, pega a lista específica
+		// Use the explicit recipient list when the story is not for every contact.
 		if (!allContacts) {
 			const statusJidList = ef.getNodeParameter('statusJidList', 0, '') as string;
 			if (statusJidList) {
@@ -84,10 +84,10 @@ export async function sendStories(ef: IExecuteFunctions) {
 			success: false,
 			error: {
 				message: error.message.includes('Could not get parameter')
-					? 'Parâmetros inválidos ou ausentes'
-					: 'Erro ao enviar status',
+					? 'Invalid or missing parameters'
+					: 'Error sending status',
 				details: error.message.includes('Could not get parameter')
-					? 'Verifique se todos os campos obrigatórios foram preenchidos corretamente'
+					? 'Verify that all required fields were completed correctly'
 					: error.message,
 				code: error.code || 'UNKNOWN_ERROR',
 				timestamp: new Date().toISOString(),

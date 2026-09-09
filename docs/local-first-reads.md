@@ -27,7 +27,7 @@ Methods are marked `local-first` or `live-only` in that response. For the full m
 This is a breaking v2 node release:
 
 - Deploy Evolution API v3 and its database migration first.
-- Upgrade the node package or the `ghcr.io/neup123/n8n-evolution-api:v2.0.0` image.
+- Upgrade the node package or the `ghcr.io/neup123/n8n-evolution-api:v2.0.1` image.
 - Reopen and test workflows that use Baileys operations.
 - Custom HTTP Request nodes must migrate from `/baileys/{method}/{instanceName}` with positional `args` to `/baileys/{group}/{method}/{instanceName}` with named fields.
 
