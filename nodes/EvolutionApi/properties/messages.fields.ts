@@ -1549,7 +1549,7 @@ export const messagesFields: INodeProperties[] = [
 		},
 	},
 
-	// Fields = Send Botões
+	// Fields = Send Buttons
 	{
 		displayName: 'Instance Name',
 		name: 'instanceName',

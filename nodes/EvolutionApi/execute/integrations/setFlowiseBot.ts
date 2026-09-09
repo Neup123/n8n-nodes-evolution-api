@@ -138,7 +138,7 @@ export async function setFlowiseBot(ef: IExecuteFunctions) {
 				success: false,
 				error: {
 					message: 'Unrecognized Flowise operation',
-					details: 'A operação solicitada não é válida para o recurso do Flowise',
+					details: 'The requested operation is not valid for the Flowise resource',
 					code: 'INVALID_OPERATION',
 					timestamp: new Date().toISOString(),
 				},
@@ -161,10 +161,10 @@ export async function setFlowiseBot(ef: IExecuteFunctions) {
 			success: false,
 			error: {
 				message: error.message.includes('Could not get parameter')
-					? 'Parâmetros inválidos ou ausentes'
-					: 'Erro ao configurar Flowise',
+					? 'Invalid or missing parameters'
+					: 'Error configuring Flowise',
 				details: error.message.includes('Could not get parameter')
-					? 'Verifique se todos os campos obrigatórios foram preenchidos corretamente'
+					? 'Verify that all required fields were completed correctly'
 					: error.message,
 				code: error.code || 'UNKNOWN_ERROR',
 				timestamp: new Date().toISOString(),

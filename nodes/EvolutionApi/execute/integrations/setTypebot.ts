@@ -155,7 +155,7 @@ export async function setTypebot(ef: IExecuteFunctions) {
 				success: false,
 				error: {
 					message: 'Unrecognized Typebot operation',
-					details: 'A operação solicitada não é válida para o recurso do Typebot',
+					details: 'The requested operation is not valid for the Typebot resource',
 					code: 'INVALID_OPERATION',
 					timestamp: new Date().toISOString(),
 				},
@@ -178,10 +178,10 @@ export async function setTypebot(ef: IExecuteFunctions) {
 			success: false,
 			error: {
 				message: error.message.includes('Could not get parameter')
-					? 'Parâmetros inválidos ou ausentes'
-					: 'Erro ao configurar Typebot',
+					? 'Invalid or missing parameters'
+					: 'Error configuring Typebot',
 				details: error.message.includes('Could not get parameter')
-					? 'Verifique se todos os campos obrigatórios foram preenchidos corretamente'
+					? 'Verify that all required fields were completed correctly'
 					: error.message,
 				code: error.code || 'UNKNOWN_ERROR',
 				timestamp: new Date().toISOString(),

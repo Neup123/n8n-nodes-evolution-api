@@ -24,7 +24,7 @@ export async function createInstanceBasic(ef: IExecuteFunctions) {
 			body.number = number;
 		}
 
-		// Verifica e adiciona configurações da instância se existirem
+		// Add instance settings when the caller supplied them.
 		const instanceSettings = ef.getNodeParameter(
 			'options_Create_instance.instanceSettings.settings',
 			0,
@@ -42,7 +42,7 @@ export async function createInstanceBasic(ef: IExecuteFunctions) {
 			Object.assign(body, instanceSettings);
 		}
 
-		// Verifica e adiciona configurações de proxy se existirem
+		// Add proxy settings when supplied
 		const proxySettings = ef.getNodeParameter(
 			'options_Create_instance.proxy.proxySettings',
 			0,
@@ -64,7 +64,7 @@ export async function createInstanceBasic(ef: IExecuteFunctions) {
 			});
 		}
 
-		// Verifica e adiciona configurações do Webhook se existirem
+		// Add webhook settings when supplied
 		const webhookSettings = ef.getNodeParameter(
 			'options_Create_instance.webhook.webhookSettings',
 			0,
@@ -87,7 +87,7 @@ export async function createInstanceBasic(ef: IExecuteFunctions) {
 			});
 		}
 
-		// Verifica e adiciona configurações do RabbitMQ se existirem
+		// Add RabbitMQ settings when supplied
 		const rabbitmqSettings = ef.getNodeParameter(
 			'options_Create_instance.rabbitmq.rabbitmqSettings',
 			0,
@@ -105,7 +105,7 @@ export async function createInstanceBasic(ef: IExecuteFunctions) {
 			});
 		}
 
-		// Verifica e adiciona configurações do Chatwoot se existirem
+		// Add Chatwoot settings when supplied
 		const chatwootSettings = ef.getNodeParameter(
 			'options_Create_instance.chatwoot.chatwootSettings',
 			0,
@@ -155,10 +155,10 @@ export async function createInstanceBasic(ef: IExecuteFunctions) {
 			success: false,
 			error: {
 				message: error.message.includes('Could not get parameter')
-					? 'Parâmetros inválidos ou ausentes'
-					: 'Erro ao criar instância',
+					? 'Invalid or missing parameters'
+					: 'Error creating instance',
 				details: error.message.includes('Could not get parameter')
-					? 'Verifique se todos os campos obrigatórios foram preenchidos corretamente'
+					? 'Verify that all required fields were completed correctly'
 					: error.message,
 				code: error.code || 'UNKNOWN_ERROR',
 				timestamp: new Date().toISOString(),

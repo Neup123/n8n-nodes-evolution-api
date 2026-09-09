@@ -71,7 +71,7 @@ type ResourceOperationFunctions = {
 	};
 };
 
-// este dicionario é utilizado para mapear as operações disponíveis para cada recurso e operação para cada função
+// Map every resource and operation to its execution function.
 export const resourceOperationsFunctions: ResourceOperationFunctions = {
 	...Object.fromEntries(
 		['baileys-api', 'baileys-communities', 'baileys-business', 'baileys-messages', 'baileys-newsletters', 'baileys-groups', 'baileys-account', 'baileys-advanced']

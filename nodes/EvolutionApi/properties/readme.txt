@@ -1,43 +1,20 @@
-Observação deste documento:
-Este documento serve para a Definição de Operações que devem aparecer
-em cada Resource, incluindo a criação de novos campos para cada Operation
+Purpose of this document
 
- ██████╗ ██████╗ ███████╗██████╗  █████╗ ████████╗██╗ ██████╗ ███╗   ██╗
-██╔═══██╗██╔══██╗██╔════╝██╔══██╗██╔══██╗╚══██╔══╝██║██╔═══██╗████╗  ██║
-██║   ██║██████╔╝█████╗  ██████╔╝███████║   ██║   ██║██║   ██║██╔██╗ ██║
-██║   ██║██╔═══╝ ██╔══╝  ██╔══██╗██╔══██║   ██║   ██║██║   ██║██║╚██╗██║
-╚██████╔╝██║     ███████╗██║  ██║██║  ██║   ██║   ██║╚██████╔╝██║ ╚████║
- ╚═════╝ ╚═╝     ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
+This file explains the terminology used by the Evolution API node property definitions.
 
-Operation = Funções/Opções de cada Resource (Instancia, Mensagens, Integração, Conversa, Perfil e Grupo)
+Resource
+  A top-level capability area, such as Instance, Messages, Integrations, Chat,
+  Profile, Groups, Events, or Baileys.
 
-"O que cada Resource vai apresentar ao ser selecionado"
+Operation
+  An action available after selecting a resource. For example, the Instance
+  resource can expose Create Instance, Create Instance with Proxy, and Connect
+  Instance.
 
-Exemplo:
-Instancias:
-  • Criar instncia;
-  • Criar instancia com proxy;
-  • Conectar instancia;
+Element
+  An input field shown for an operation. For example, Send Text Message needs
+  the sending instance, recipient remote JID, and message text.
 
-Cada Resource adicionada tera um desse para listar as opções/funções de cada Resource
-
-
-
-
-	███████╗██╗     ███████╗███╗   ███╗███████╗███╗   ██╗████████╗███████╗
-	██╔════╝██║     ██╔════╝████╗ ████║██╔════╝████╗  ██║╚══██╔══╝██╔════╝
-	█████╗  ██║     █████╗  ██╔████╔██║█████╗  ██╔██╗ ██║   ██║   ███████╗
-	██╔══╝  ██║     ██╔══╝  ██║╚██╔╝██║██╔══╝  ██║╚██╗██║   ██║   ╚════██║
-	███████╗███████╗███████╗██║ ╚═╝ ██║███████╗██║ ╚████║   ██║   ███████║
-	╚══════╝╚══════╝╚══════╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝
-
-Elements = Os campos que aparecem em cada Operation
-
-"Cada Operation (ex: Enviar mensagem de Texto) tem campos que precisam ser preenchido para fazer uma requisição"
-
-Exemplo:
-Enviar Mensagem de Texto:
-  • Instancia que vai enviar;
-  • RemoteJid do destinatario;
-  • Mensagem que vai ser enviada;
-
+When adding an operation, update its resource's operation list, define every
+required element, implement its execution handler, and keep labels, descriptions,
+errors, and documentation in English.
