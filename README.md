@@ -33,6 +33,8 @@ Eligible reads are local-first: Evolution returns a fresh, instance-scoped datab
 WhatsApp. Enable **Force Live WhatsApp Read** when a workflow explicitly needs an immediate refresh. Missing or expired
 snapshots are refreshed automatically, and live failures are returned instead of silently serving stale data.
 
+See the [local-first workflow guide](docs/local-first-reads.md) for supported operations, upgrade requirements, and safe verification.
+
 ## Building webhook workflows
 
 This fork provides a dedicated AsyncAPI contract—the webhook/event equivalent of Swagger—with all 49 Evolution webhook
