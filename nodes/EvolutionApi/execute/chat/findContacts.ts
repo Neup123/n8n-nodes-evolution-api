@@ -17,7 +17,7 @@ export async function findContacts(ef: IExecuteFunctions) {
             const remoteJid = ef.getNodeParameter('remoteJid', 0) as string;
             body = {
                 where: {
-                    id: remoteJid.includes('@') ? remoteJid : `${remoteJid}@s.whatsapp.net`,
+                    remoteJid: remoteJid.includes('@') ? remoteJid : `${remoteJid}@s.whatsapp.net`,
                 },
             };
         }
@@ -41,7 +41,7 @@ export async function findContacts(ef: IExecuteFunctions) {
             success: false,
             error: {
                 message: error.message,
-                details: 'Erro ao buscar contatos',
+                details: 'Error fetching contacts',
                 code: error.code || 'UNKNOWN_ERROR',
                 timestamp: new Date().toISOString(),
             },

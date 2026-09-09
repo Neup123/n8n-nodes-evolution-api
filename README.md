@@ -26,8 +26,14 @@ For methods that accept `Buffer` or `Uint8Array`, use a Base64 envelope:
 ```
 
 The node calls `POST /baileys/<group>/<method>/:instanceName`. See the Evolution API Swagger UI at `/docs` or
-query `GET /baileys/methods/:instanceName` for the live method registry. The old ordered-argument routes remain
-available for compatibility.
+query `GET /baileys/methods/:instanceName` for the live method registry. Version 2 requires Evolution API v3; the old
+ordered-argument routes were removed from that API as a breaking change.
+
+Eligible reads are local-first: Evolution returns a fresh, instance-scoped database snapshot without contacting
+WhatsApp. Enable **Force Live WhatsApp Read** when a workflow explicitly needs an immediate refresh. Missing or expired
+snapshots are refreshed automatically, and live failures are returned instead of silently serving stale data.
+
+See the [local-first workflow guide](docs/local-first-reads.md) for supported operations, upgrade requirements, and safe verification.
 
 ## Building webhook workflows
 
@@ -52,7 +58,7 @@ For an existing Docker container:
 ```bash
 docker exec -u node -it <your-n8n-container> sh -lc \
   'mkdir -p ~/.n8n/custom && cd ~/.n8n/custom && npm install \
-  https://github.com/Neup123/n8n-nodes-evolution-api/releases/download/v1.2.7/n8n-nodes-evolution-api-en-1.2.7.tgz \
+  https://github.com/Neup123/n8n-nodes-evolution-api/releases/download/v2.0.0/n8n-nodes-evolution-api-en-2.0.0.tgz \
   --ignore-scripts'
 docker restart <your-n8n-container>
 ```
@@ -63,7 +69,7 @@ For an existing non-Docker, self-hosted n8n:
 mkdir -p ~/.n8n/custom
 cd ~/.n8n/custom
 npm install \
-  https://github.com/Neup123/n8n-nodes-evolution-api/releases/download/v1.2.7/n8n-nodes-evolution-api-en-1.2.7.tgz \
+  https://github.com/Neup123/n8n-nodes-evolution-api/releases/download/v2.0.0/n8n-nodes-evolution-api-en-2.0.0.tgz \
   --ignore-scripts
 ```
 

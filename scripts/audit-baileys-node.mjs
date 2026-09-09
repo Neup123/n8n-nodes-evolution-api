@@ -67,4 +67,20 @@ if (
 	throw new Error(`Generated execution request is incorrect: ${JSON.stringify(request)}`);
 }
 
+const liveReadParameters = {
+	resource: 'baileys-account',
+	operation: 'fetchBlocklist',
+	instanceName: 'test-instance',
+	live: true,
+};
+await executeBaileysMethod({
+	getNode: () => ({ name: 'Audit', type: 'CUSTOM.evolutionApiBaileys7', typeVersion: 1, position: [0, 0], parameters: liveReadParameters }),
+	getNodeParameter: (name, _item, fallback) => liveReadParameters[name] ?? fallback,
+	getCredentials: async () => ({ 'server-url': 'https://evolution.example', apikey: 'redacted' }),
+	helpers: { request: async (options) => { request = options; return { ok: true }; } },
+});
+if (request?.body?.live !== true || request?.qs?.live !== true) {
+	throw new Error(`Live read override is missing: ${JSON.stringify(request)}`);
+}
+
 console.log(`Audited ${Object.keys(BAILEYS_METHOD_METADATA).length} Baileys operations successfully.`);

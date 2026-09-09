@@ -40,28 +40,40 @@ const parameterLabels: Record<string, string> = {
 
 function parameterDescription(method: string, parameter: ParameterDefinition) {
 	const name = parameter.name;
-	if (method.startsWith('community') && ['jid', 'communityJid', 'parentCommunityJid'].includes(name)) {
+	if (
+		method.startsWith('community') &&
+		['jid', 'communityJid', 'parentCommunityJid'].includes(name)
+	) {
 		return 'Parent community JID ending in @g.us. A regular group or subgroup JID is not accepted unless the operation explicitly says otherwise';
 	}
 	if (method.startsWith('group') && ['jid', 'id', 'groupJid'].includes(name)) {
 		return 'WhatsApp group JID ending in @g.us';
 	}
-	if (['jid', 'id', 'to'].includes(name)) return 'Full WhatsApp address, for example 15551234567@s.whatsapp.net or 120363000000000000@g.us.';
-	if (/participants?/i.test(name)) return 'Add one WhatsApp JID per value. Both @s.whatsapp.net and @lid participant identifiers are accepted.';
-	if (/inviteCode/i.test(name)) return 'Invite code only, without the https://chat.whatsapp.com/ URL prefix.';
+	if (['jid', 'id', 'to'].includes(name))
+		return 'Full WhatsApp address, for example 15551234567@s.whatsapp.net or 120363000000000000@g.us.';
+	if (/participants?/i.test(name))
+		return 'Add one WhatsApp JID per value. Both @s.whatsapp.net and @lid participant identifiers are accepted.';
+	if (/inviteCode/i.test(name))
+		return 'Invite code only, without the https://chat.whatsapp.com/ URL prefix.';
 	if (/messageId/i.test(name)) return 'WhatsApp message identifier from the message key.';
 	if (name === 'action') return `Action to perform when running ${titleCase(method)}.`;
-	if (name === 'content') return 'Baileys message content. Use the JSON structure for the message type you want to send.';
-	if (name === 'options') return 'Optional Baileys settings for this operation. Only include properties you need to override.';
+	if (name === 'content')
+		return 'Baileys message content. Use the JSON structure for the message type you want to send.';
+	if (name === 'options')
+		return 'Optional Baileys settings for this operation. Only include properties you need to override.';
 	if (name === 'subject') return 'Name shown to WhatsApp users.';
 	if (name === 'description') return 'Description shown in WhatsApp.';
-	return parameter.schema.description && !/^(string|number|boolean|any)(\[\])?$/.test(parameter.schema.description)
+	return parameter.schema.description &&
+		!/^(string|number|boolean|any)(\[\])?$/.test(parameter.schema.description)
 		? parameter.schema.description
 		: `${titleCase(name)} used by ${titleCase(method)}.`;
 }
 
 function parameterLabel(method: string, name: string) {
-	if (method.startsWith('community') && ['jid', 'communityJid', 'parentCommunityJid'].includes(name)) {
+	if (
+		method.startsWith('community') &&
+		['jid', 'communityJid', 'parentCommunityJid'].includes(name)
+	) {
 		return name === 'parentCommunityJid' ? 'Parent Community JID' : 'Community JID';
 	}
 	if (method.startsWith('group') && ['jid', 'id', 'groupJid'].includes(name)) return 'Group JID';
@@ -76,7 +88,12 @@ function parameterField(method: string, parameter: ParameterDefinition): INodePr
 		description: parameterDescription(method, parameter),
 		displayOptions: {
 			show: {
-				resource: ['baileys-api', baileysResourceByGroup[BAILEYS_METHOD_METADATA[method as keyof typeof BAILEYS_METHOD_METADATA].group]],
+				resource: [
+					'baileys-api',
+					baileysResourceByGroup[
+						BAILEYS_METHOD_METADATA[method as keyof typeof BAILEYS_METHOD_METADATA].group
+					],
+				],
 				operation: [method],
 			},
 		},
@@ -107,18 +124,60 @@ function parameterField(method: string, parameter: ParameterDefinition): INodePr
 	};
 }
 
-const typedParameterFields = Object.entries(BAILEYS_METHOD_METADATA).flatMap(([method, definition]) =>
-	definition.parameters.map((parameter) => parameterField(method, parameter)),
+const typedParameterFields = Object.entries(BAILEYS_METHOD_METADATA).flatMap(
+	([method, definition]) =>
+		definition.parameters.map((parameter) => parameterField(method, parameter)),
 );
 
 export const baileysFields: INodeProperties[] = [
+	{
+		displayName: 'Force Live WhatsApp Read',
+		name: 'live',
+		type: 'boolean',
+		default: false,
+		description: 'Whether to bypass the Evolution API local snapshot and query WhatsApp now',
+		displayOptions: {
+			show: {
+				resource: ['baileys-api', ...Object.values(baileysResourceByGroup)],
+				operation: [
+					'communityMetadata',
+					'communityFetchLinkedGroups',
+					'communityRequestParticipantsList',
+					'communityInviteCode',
+					'communityGetInviteInfo',
+					'communityFetchAllParticipating',
+					'getOrderDetails',
+					'getCatalog',
+					'getCollections',
+					'fetchPrivacySettings',
+					'newsletterSubscribers',
+					'newsletterMetadata',
+					'newsletterFetchMessages',
+					'newsletterAdminCount',
+					'groupMetadata',
+					'groupRequestParticipantsList',
+					'groupInviteCode',
+					'groupGetInviteInfo',
+					'groupFetchAllParticipating',
+					'getBotListV2',
+					'fetchBlocklist',
+					'fetchStatus',
+					'fetchDisappearingDuration',
+					'getBusinessProfile',
+					'fetchAccountReachoutTimelock',
+					'fetchNewChatMessageCap',
+				],
+			},
+		},
+	},
 	{
 		displayName: 'Instance Name',
 		name: 'instanceName',
 		type: 'string',
 		default: '',
 		required: true,
-		description: 'Name of the connected Evolution API instance that will perform this WhatsApp operation',
+		description:
+			'Name of the connected Evolution API instance that will perform this WhatsApp operation',
 		displayOptions: {
 			show: {
 				resource: ['baileys-api', ...Object.values(baileysResourceByGroup)],
