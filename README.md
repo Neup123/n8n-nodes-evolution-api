@@ -60,7 +60,7 @@ For an existing Docker container:
 ```bash
 docker exec -u node -it <your-n8n-container> sh -lc \
   'mkdir -p ~/.n8n/custom && cd ~/.n8n/custom && npm install \
-  https://github.com/Neup123/n8n-nodes-evolution-api/releases/download/v2.0.1/n8n-nodes-evolution-api-en-2.0.1.tgz \
+  https://github.com/Neup123/n8n-nodes-evolution-api/releases/download/v3.0.0/n8n-nodes-evolution-api-en-3.0.0.tgz \
   --ignore-scripts'
 docker restart <your-n8n-container>
 ```
@@ -71,7 +71,7 @@ For an existing non-Docker, self-hosted n8n:
 mkdir -p ~/.n8n/custom
 cd ~/.n8n/custom
 npm install \
-  https://github.com/Neup123/n8n-nodes-evolution-api/releases/download/v2.0.1/n8n-nodes-evolution-api-en-2.0.1.tgz \
+  https://github.com/Neup123/n8n-nodes-evolution-api/releases/download/v3.0.0/n8n-nodes-evolution-api-en-3.0.0.tgz \
   --ignore-scripts
 ```
 
