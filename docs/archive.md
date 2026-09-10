@@ -1,6 +1,6 @@
 # Evolution API v4 WhatsApp archive
 
-Node version 3 adds the **WhatsApp Archive** resource for Evolution API 4. Configure both credential fields: the normal Evolution `ApiKey` and the separate `Archive API Key`. The latter must have the scope required by the selected operation.
+Node version 4 includes the **WhatsApp Archive** resource for Evolution API 4. Configure both credential fields: the normal Evolution `ApiKey` and the separate `Archive API Key`. The latter must have the scope required by the selected operation.
 
 | Node operation | HTTP method and path | Required archive scope | Output |
 | --- | --- | --- | --- |

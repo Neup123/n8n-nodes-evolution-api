@@ -53,6 +53,8 @@ function titleCase(value: string) {
 }
 
 function describeMethod(method: string) {
+	const generated = BAILEYS_METHOD_METADATA[method as keyof typeof BAILEYS_METHOD_METADATA];
+	if (generated.description) return generated.description;
 	if (methodDescriptions[method]) return methodDescriptions[method];
 	const readable = titleCase(method).toLowerCase();
 	if (/^(fetch|get)/.test(method)) return `Retrieve ${readable.replace(/^(fetch|get) /, '')} from WhatsApp.`;
@@ -76,7 +78,10 @@ function operationSelector(group: string, resource: string): INodeProperties {
 		options: Object.entries(BAILEYS_METHOD_METADATA)
 			.filter(([, definition]) => group === 'all' || definition.group === group)
 			.map(([method, definition]) => ({
-				name: group === 'all' ? `${groupLabels[definition.group]}: ${titleCase(method)}` : titleCase(method),
+				name:
+					group === 'all'
+						? `${groupLabels[definition.group]}: ${titleCase(method)}`
+						: definition.displayName,
 				value: method,
 				action: titleCase(method),
 				description: describeMethod(method),
@@ -87,5 +92,4 @@ function operationSelector(group: string, resource: string): INodeProperties {
 
 export const baileysOperations: INodeProperties[] = [
 	...Object.entries(baileysResourceByGroup).map(([group, resource]) => operationSelector(group, resource)),
-	operationSelector('all', 'baileys-api'),
 ];

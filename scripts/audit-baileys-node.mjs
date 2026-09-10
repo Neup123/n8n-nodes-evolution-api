@@ -9,6 +9,11 @@ const { resourceOperationsFunctions } = require('../dist/nodes/EvolutionApi/exec
 const properties = new EvolutionApiBaileys7().description.properties;
 const failures = [];
 
+const resourceSelector = properties.find((property) => property.name === 'resource');
+if (resourceSelector?.options?.some((option) => option.value === 'baileys-api')) {
+	failures.push('Legacy all-methods Baileys resource is still visible');
+}
+
 for (const selector of properties.filter((property) => property.name === 'operation')) {
 	for (const resource of selector.displayOptions?.show?.resource ?? []) {
 		for (const operation of selector.options ?? []) {
@@ -26,6 +31,16 @@ for (const [method, definition] of Object.entries(BAILEYS_METHOD_METADATA)) {
 	);
 	if (selectors.length !== 1 || !selectors[0].options?.some((option) => option.value === method)) {
 		failures.push(`${method}: operation selector is missing from ${resource}`);
+	}
+	const option = selectors[0]?.options?.find((candidate) => candidate.value === method);
+	if (!option?.description || /^Run (the )?/i.test(option.description)) {
+		failures.push(`${method}: operation needs a human-readable description`);
+	}
+	if (
+		['communities', 'groups', 'newsletters'].includes(definition.group)
+		&& new RegExp(`^${definition.group.replace(/ies$/, 'y').replace(/s$/, '')} `, 'i').test(option?.name ?? '')
+	) {
+		failures.push(`${method}: focused operation name repeats its resource prefix`);
 	}
 
 	for (const parameter of definition.parameters) {

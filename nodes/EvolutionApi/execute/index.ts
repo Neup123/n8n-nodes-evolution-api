@@ -100,7 +100,6 @@ export const resourceOperationsFunctions: ResourceOperationFunctions = {
 	),
 	...Object.fromEntries(
 		[
-			'baileys-api',
 			'baileys-communities',
 			'baileys-business',
 			'baileys-messages',
