@@ -77,10 +77,6 @@ const resourcesOptions: INodeProperties = {
 			value: baileysResourceByGroup.advanced,
 		},
 		{
-			name: 'Baileys: All Methods (Legacy)',
-			value: 'baileys-api',
-		},
-		{
 			name: 'Event',
 			value: 'events-api',
 		},

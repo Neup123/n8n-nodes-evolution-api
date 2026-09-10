@@ -3,7 +3,7 @@
 This is an unofficial WhatsApp API node for n8n, with direct support for the Baileys 7 API exposed by
 [`Neup123/evolution-api`](https://github.com/Neup123/evolution-api).
 
-Version 3 adds a scoped **WhatsApp Archive** resource for Evolution API 4, including archive searches, policy management, existing-database backfill, integrity checks, and preview-confirm purges. See [the archive node reference](docs/archive.md).
+Version 4 adds a scoped **WhatsApp Archive** resource for Evolution API 4.1, including archive searches, policy management, existing-database backfill, integrity checks, and preview-confirm purges. See [the archive node reference](docs/archive.md). This is a breaking node release because the duplicated legacy all-methods resource was removed.
 
 ## Baileys operations
 
@@ -12,6 +12,8 @@ Choose a focused Baileys resource: **Account & Privacy**, **Business & Catalog**
 instance. Every operation has a practical explanation. The node displays a named field for every method argument,
 string lists can be entered as repeated values, and enum arguments are dropdowns; for example,
 `communityParticipantsUpdate` shows `jid`, `participants`, and an `action` dropdown.
+
+The duplicated **Baileys: All Methods (Legacy)** selector has been removed. Existing focused resources retain the same method values, so migrate a saved legacy node by selecting the corresponding focused Baileys resource. Community, Group, and Newsletter operation names omit the redundant resource prefix. The [generated contract tree](docs/baileys/README.md) documents every request field, its meaning, and every response structure.
 
 ```json
 {
@@ -33,7 +35,7 @@ ordered-argument routes were removed from that API as a breaking change.
 
 Eligible reads are local-first: Evolution returns a fresh, instance-scoped database snapshot without contacting
 WhatsApp. Enable **Force Live WhatsApp Read** when a workflow explicitly needs an immediate refresh. Missing or expired
-snapshots are refreshed automatically, and live failures are returned instead of silently serving stale data.
+snapshots and method-relevant empty results are refreshed automatically, persisted, and live failures are returned instead of silently serving stale data.
 
 See the [local-first workflow guide](docs/local-first-reads.md) for supported operations, upgrade requirements, and safe verification.
 
@@ -60,7 +62,7 @@ For an existing Docker container:
 ```bash
 docker exec -u node -it <your-n8n-container> sh -lc \
   'mkdir -p ~/.n8n/custom && cd ~/.n8n/custom && npm install \
-  https://github.com/Neup123/n8n-nodes-evolution-api/releases/download/v3.0.0/n8n-nodes-evolution-api-en-3.0.0.tgz \
+  https://github.com/Neup123/n8n-nodes-evolution-api/releases/download/v4.0.0/n8n-nodes-evolution-api-en-4.0.0.tgz \
   --ignore-scripts'
 docker restart <your-n8n-container>
 ```
@@ -71,7 +73,7 @@ For an existing non-Docker, self-hosted n8n:
 mkdir -p ~/.n8n/custom
 cd ~/.n8n/custom
 npm install \
-  https://github.com/Neup123/n8n-nodes-evolution-api/releases/download/v3.0.0/n8n-nodes-evolution-api-en-3.0.0.tgz \
+  https://github.com/Neup123/n8n-nodes-evolution-api/releases/download/v4.0.0/n8n-nodes-evolution-api-en-4.0.0.tgz \
   --ignore-scripts
 ```
 

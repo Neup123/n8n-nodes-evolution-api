@@ -40,6 +40,12 @@ const parameterLabels: Record<string, string> = {
 
 function parameterDescription(method: string, parameter: ParameterDefinition) {
 	const name = parameter.name;
+	if (method === 'getCatalog' && name === 'options')
+		return 'Enter JSON with optional jid (business owner @s.whatsapp.net), limit, and cursor. Omit jid to query the connected account catalog.';
+	if (method === 'fetchPrivacySettings' && name === 'force')
+		return 'Whether to bypass Baileys in-memory privacy state. Leave disabled for normal behavior.';
+	if (method === 'groupFetchAllParticipating' && name === 'includeParticipants')
+		return 'Whether every group should include its participant array. Disable for a compact all-groups response.';
 	if (
 		method.startsWith('community') &&
 		['jid', 'communityJid', 'parentCommunityJid'].includes(name)
@@ -89,7 +95,6 @@ function parameterField(method: string, parameter: ParameterDefinition): INodePr
 		displayOptions: {
 			show: {
 				resource: [
-					'baileys-api',
 					baileysResourceByGroup[
 						BAILEYS_METHOD_METADATA[method as keyof typeof BAILEYS_METHOD_METADATA].group
 					],
@@ -138,7 +143,7 @@ export const baileysFields: INodeProperties[] = [
 		description: 'Whether to bypass the Evolution API local snapshot and query WhatsApp now',
 		displayOptions: {
 			show: {
-				resource: ['baileys-api', ...Object.values(baileysResourceByGroup)],
+				resource: [...Object.values(baileysResourceByGroup)],
 				operation: [
 					'communityMetadata',
 					'communityFetchLinkedGroups',
@@ -180,7 +185,7 @@ export const baileysFields: INodeProperties[] = [
 			'Name of the connected Evolution API instance that will perform this WhatsApp operation',
 		displayOptions: {
 			show: {
-				resource: ['baileys-api', ...Object.values(baileysResourceByGroup)],
+				resource: [...Object.values(baileysResourceByGroup)],
 			},
 		},
 	},
