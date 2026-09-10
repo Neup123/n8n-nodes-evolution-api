@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-evolution-api-en",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "Unofficial Evolution API node for n8n with Baileys 7 method support",
   "keywords": [
     "n8n-community-node-package"
@@ -28,6 +28,7 @@
     "lint": "eslint nodes credentials package.json",
     "lintfix": "eslint nodes credentials package.json --fix",
     "audit:baileys": "node scripts/audit-baileys-node.mjs",
+    "audit:archive": "node scripts/audit-archive-node.mjs",
     "prepare": "npm run build",
     "prepublishOnly": "pnpm build && pnpm lint -c .eslintrc.prepublish.js nodes credentials package.json"
   },

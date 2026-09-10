@@ -3,6 +3,8 @@
 This is an unofficial WhatsApp API node for n8n, with direct support for the Baileys 7 API exposed by
 [`Neup123/evolution-api`](https://github.com/Neup123/evolution-api).
 
+Version 3 adds a scoped **WhatsApp Archive** resource for Evolution API 4, including archive searches, policy management, existing-database backfill, integrity checks, and preview-confirm purges. See [the archive node reference](docs/archive.md).
+
 ## Baileys operations
 
 Choose a focused Baileys resource: **Account & Privacy**, **Business & Catalog**, **Call & Message**, **Community**,

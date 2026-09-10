@@ -8,14 +8,14 @@ import {
 export class EvolutionApi implements ICredentialType {
 	name = 'evolutionApi';
 	displayName = 'Evolution API';
-	documentationUrl = 'https://doc.evolution-api.com/pt';
+	documentationUrl = 'https://github.com/Neup123/n8n-nodes-evolution-api#readme';
 	properties: INodeProperties[] = [
 		{
 			displayName: 'Server Url',
 			name: 'server-url',
 			type: 'string',
 			default: '',
-			placeholder: 'https://exemplo.com',
+			placeholder: 'https://api.example.com',
 			description: 'Enter the complete URL of your Evolution API (e.g., https://api.example.com)',
 		},
 		{
@@ -27,6 +27,14 @@ export class EvolutionApi implements ICredentialType {
 				password: true,
 			},
 			description: 'Enter the ApiKey of the Instance or Global of your Evolution API',
+		},
+		{
+			displayName: 'Archive API Key',
+			name: 'archiveApiKey',
+			type: 'string',
+			default: '',
+			typeOptions: { password: true },
+			description: 'Separate scoped key for Evolution API v4 archive routes',
 		},
 	];
 

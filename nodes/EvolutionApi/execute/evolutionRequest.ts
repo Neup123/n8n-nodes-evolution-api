@@ -4,12 +4,14 @@ export async function evolutionRequest(ef: IExecuteFunctions, options: IRequestO
 	const credentials = await ef.getCredentials('evolutionApi');
 	const serverUrl = credentials['server-url'];
 	const apiKey = credentials.apikey;
+	const archiveApiKey = credentials.archiveApiKey;
 	const live = ef.getNodeParameter('live', 0, false) === true;
 
 	const requestOptions: IRequestOptions = {
 		...options,
 		headers: {
 			apikey: apiKey,
+			...(archiveApiKey ? { 'x-archive-key': archiveApiKey } : {}),
 			...(options.headers || {}),
 		},
 		uri: `${serverUrl}${options.uri}`,
