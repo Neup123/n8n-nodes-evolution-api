@@ -4,6 +4,7 @@ import { deleteInstance } from './instance/deleteInstance';
 import { fetchInstances } from './instance/fetchInstances';
 import { instanceConnect } from './instance/instanceConnect';
 import { instanceSettings } from './instance/instanceSettings';
+import { outboundAudit } from './instance/outboundAudit';
 import { logoutInstance } from './instance/logoutInstance';
 import { restartInstance } from './instance/restartInstance';
 import { setPresence } from './instance/setPresence';
@@ -121,6 +122,7 @@ export const resourceOperationsFunctions: ResourceOperationFunctions = {
 		'delete-instance': deleteInstance,
 		'fetch-instances': fetchInstances,
 		'instance-settings': instanceSettings,
+		'outbound-audit': outboundAudit,
 		'set-proxy': setProxy,
 	},
 	'messages-api': {

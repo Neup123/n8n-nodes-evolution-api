@@ -16,6 +16,7 @@ export async function instanceSettings(ef: IExecuteFunctions) {
 		const readMessages = ef.getNodeParameter('readMessages', 0);
 		const syncFullHistory = ef.getNodeParameter('syncFullHistory', 0);
 		const readStatus = ef.getNodeParameter('readStatus', 0);
+		const automationSafety = ef.getNodeParameter('automationSafety.policy', 0, {}) as any;
 
 		const body: any = {
 			rejectCall,
@@ -29,6 +30,56 @@ export async function instanceSettings(ef: IExecuteFunctions) {
 
 		if (rejectCall) {
 			body.msgCall = msgCall || '';
+		}
+
+		if (automationSafety && Object.keys(automationSafety).length > 0) {
+			body.automationSafety = {
+				enabled: Boolean(automationSafety.enabled),
+				typing: {
+					enabled: Boolean(automationSafety.typingEnabled),
+					minMs: automationSafety.typingMinMs,
+					maxMs: automationSafety.typingMaxMs,
+					charactersPerSecond: automationSafety.typingCharactersPerSecond,
+					jitterPercent: automationSafety.typingJitterPercent,
+					presence: automationSafety.typingPresence,
+					applyToMediaCaptions: Boolean(automationSafety.typingApplyToMediaCaptions),
+				},
+				rateLimit: {
+					instancePerMinute: automationSafety.instancePerMinute,
+					instancePerDay: automationSafety.instancePerDay,
+					recipientPerMinute: automationSafety.recipientPerMinute,
+					recipientPerDay: automationSafety.recipientPerDay,
+					minimumIntervalMs: automationSafety.minimumIntervalMs,
+					maxConcurrentSends: automationSafety.maxConcurrentSends,
+				},
+				quietHours: {
+					enabled: Boolean(automationSafety.quietHoursEnabled),
+					start: automationSafety.quietHoursStart,
+					end: automationSafety.quietHoursEnd,
+					timeZone: automationSafety.quietHoursTimeZone,
+				},
+				duplicate: {
+					enabled: Boolean(automationSafety.duplicateEnabled),
+					windowSeconds: automationSafety.duplicateWindowSeconds,
+				},
+				suppression: {
+					recipients: String(automationSafety.suppressedRecipients || '')
+						.split(/[\n,]/)
+						.map((value) => value.trim())
+						.filter(Boolean),
+					allowlistEnabled: Boolean(automationSafety.allowlistEnabled),
+					allowedRecipients: String(automationSafety.allowedRecipients || '')
+						.split(/[\n,]/)
+						.map((value) => value.trim())
+						.filter(Boolean),
+				},
+				failurePause: {
+					enabled: Boolean(automationSafety.failurePauseEnabled),
+					threshold: automationSafety.failurePauseThreshold,
+					pauseSeconds: automationSafety.failurePauseSeconds,
+				},
+				audit: { retentionDays: automationSafety.auditRetentionDays },
+			};
 		}
 
 		const options: IRequestOptions = {
