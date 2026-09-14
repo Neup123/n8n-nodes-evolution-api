@@ -52,6 +52,11 @@ export async function instanceSettings(ef: IExecuteFunctions) {
 					minimumIntervalMs: automationSafety.minimumIntervalMs,
 					maxConcurrentSends: automationSafety.maxConcurrentSends,
 				},
+				outreach: {
+					enabled: Boolean(automationSafety.outreachEnabled),
+					newOrDormantRecipientsPerDay: automationSafety.newOrDormantRecipientsPerDay,
+					dormantAfterDays: automationSafety.dormantAfterDays,
+				},
 				quietHours: {
 					enabled: Boolean(automationSafety.quietHoursEnabled),
 					start: automationSafety.quietHoursStart,

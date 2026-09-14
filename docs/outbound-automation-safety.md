@@ -10,6 +10,7 @@ Use **Evolution API → Instances → Set Behavior → Automation Safety & Pacin
 | Characters Per Second | `typing.charactersPerSecond` | Length-to-duration conversion; message text is never changed. |
 | Bounded Jitter | `typing.jitterPercent` | Up to 25% variation to spread traffic bursts. |
 | Instance/Recipient Limits | `rateLimit.*` | Persistent rolling minute and 24-hour limits, including the instance-wide daily cap. |
+| New/Dormant Outreach | `outreach.*` | Limits unique direct contacts with no recent inbound message; active inbound contacts, groups, and broadcasts are excluded. |
 | Maximum Concurrent Sends | `rateLimit.maxConcurrentSends` | Per-process in-flight ceiling. |
 | Quiet Hours | `quietHours.*` | Rejects sends inside an IANA-time-zone window. |
 | Suppressed Recipients | `suppression.recipients` | JIDs or numbers that may not receive automated sends. |
@@ -32,6 +33,7 @@ Use **Instances → Get Outbound Safety Audit** to retrieve up to 500 newest row
       "messageType": "text",
       "status": "BLOCKED",
       "reason": "duplicate_message",
+      "recipientCategory": "ENGAGED",
       "delayMs": null,
       "requestedAt": "2026-09-14T12:00:00.000Z",
       "sentAt": null
@@ -40,6 +42,8 @@ Use **Instances → Get Outbound Safety Audit** to retrieve up to 500 newest row
 }
 ```
 
-Policy rejections arrive as HTTP 429. Retry only retryable results such as rate limits or quiet hours; do not automatically retry `recipient_suppressed`, `recipient_not_allowed`, or `duplicate_message`.
+`outreach.enabled` defaults to true under an enabled master policy, `outreach.newOrDormantRecipientsPerDay` defaults to 50, and `outreach.dormantAfterDays` defaults to 180. Anyone who sends an inbound message inside that relationship window is `ENGAGED` and does not consume the unique-recipient quota. A target with no inbound history is `NEW`; one with older inbound history is `DORMANT`. Outbound-only activity does not establish engagement.
+
+Policy rejections arrive as HTTP 429. Retry only retryable results such as rate limits or quiet hours; do not automatically retry `recipient_suppressed`, `recipient_not_allowed`, `duplicate_message`, or `outreach_recipient_limit` without changing the campaign window.
 
 See the [complete Evolution API policy reference](https://github.com/Neup123/evolution-api/blob/main/docs/outbound-automation-safety.md) for defaults, bounds, processing order, and response details.
