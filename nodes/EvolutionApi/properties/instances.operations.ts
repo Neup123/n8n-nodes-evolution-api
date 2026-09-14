@@ -45,6 +45,12 @@ export const instancesOperationsOptions: INodeProperties = {
 			description: 'Sets the instance behavior',
 			value: 'instance-settings',
 		},
+		{
+			name: 'Get Outbound Safety Audit',
+			action: 'Get outbound safety audit',
+			description: 'Lists persistent sent, failed, pending, and policy-blocked outbound message records',
+			value: 'outbound-audit',
+		},
 
 		// Option = Set presence
 		{

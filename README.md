@@ -39,6 +39,8 @@ snapshots and method-relevant empty results are refreshed automatically, persist
 
 See the [local-first workflow guide](docs/local-first-reads.md) for supported operations, upgrade requirements, and safe verification.
 
+**Instances → Set Behavior** also exposes the API's complete Automation Safety & Pacing policy: bounded typing indicators, instance/recipient rate limits, quiet hours, suppression and optional recipient allowlisting, exact-duplicate blocking, failure pauses, and audit retention. The policy applies centrally, so normal message nodes require no extra pacing fields and message content is never rewritten. See the [n8n policy guide](docs/outbound-automation-safety.md) and [API policy reference](https://github.com/Neup123/evolution-api/blob/main/docs/outbound-automation-safety.md).
+
 ## Building webhook workflows
 
 This fork provides a dedicated AsyncAPI contract—the webhook/event equivalent of Swagger—with all 49 Evolution webhook
