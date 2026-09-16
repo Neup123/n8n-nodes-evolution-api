@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.2.0 - 2026-09-16
+
+- Added a 1–100% near-duplicate similarity threshold to Instances → Set Behavior.
+- Clarified that duplicate lookback is time-based and checks every successful send to the same recipient inside the window, not a fixed number of messages.
+- Requires Evolution API 5.2.0 or later for approximate duplicate matching.
+
 ## 4.1.2 - 2026-09-16
 
 - Documented and exposed the Evolution API 5.1 canonical local-message response, provenance, PN/LID aliases, and delivery evidence.
