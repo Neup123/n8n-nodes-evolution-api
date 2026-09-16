@@ -66,6 +66,7 @@ export async function instanceSettings(ef: IExecuteFunctions) {
 				duplicate: {
 					enabled: Boolean(automationSafety.duplicateEnabled),
 					windowSeconds: automationSafety.duplicateWindowSeconds,
+					similarityThresholdPercent: automationSafety.duplicateSimilarityThresholdPercent,
 				},
 				suppression: {
 					recipients: String(automationSafety.suppressedRecipients || '')
