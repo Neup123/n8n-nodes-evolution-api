@@ -79,8 +79,9 @@ export const chatOperations: INodeProperties = {
 		},
 		{
 			name: 'Search Messages',
-			action: 'Search messages from a contact',
-			description: 'Searches messages from a specific contact',
+			action: 'Search canonical local message history',
+			description:
+				'Reads stored messages for a PN or LID and returns provenance, delivery evidence, and acknowledgement records without contacting WhatsApp',
 			value: 'find-messages',
 		},
 		{

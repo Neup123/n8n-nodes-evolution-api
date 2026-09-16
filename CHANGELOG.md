@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.1.2 - 2026-09-16
+
+- Documented and exposed the Evolution API 5.1 canonical local-message response, provenance, PN/LID aliases, and delivery evidence.
+- Clarified that `PENDING`, `PROVISIONAL`, `SERVER_ACK`, and `SERVER_ACCEPTED` are not recipient-delivery evidence.
+- Improved Chat → Search Messages labels and field explanations.
+- Documented the breaking PN/LID safety correction: unresolved LID digits are never exposed as a phone number.
+- Requires Evolution API 5.1.0 for the new response fields and future message idempotency.
+
 ## 4.1.1 - 2026-09-14
 
 - Added controls for unique new/dormant-recipient outreach and the inbound inactivity window.

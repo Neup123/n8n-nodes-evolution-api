@@ -458,12 +458,13 @@ export const chatFields: INodeProperties[] = [
 
 	// Fields for searching messages
 	{
-		displayName: 'Contact',
+		displayName: 'Contact PN or LID JID',
 		name: 'remoteJid',
 		type: 'string' as NodePropertyTypes,
 		default: '',
 		required: true,
-		description: 'Contact number',
+		description:
+			'Phone number, full @s.whatsapp.net JID, or @lid JID. Evolution searches both the primary and alternate identity stored for each canonical message.',
 		displayOptions: {
 			show: {
 				resource: ['chat-api'],
@@ -476,7 +477,7 @@ export const chatFields: INodeProperties[] = [
 		name: 'page',
 		type: 'number' as NodePropertyTypes,
 		default: 1,
-		description: 'Page number',
+		description: 'One-based result page, newest messages first',
 		displayOptions: {
 			show: {
 				resource: ['chat-api'],
@@ -489,7 +490,7 @@ export const chatFields: INodeProperties[] = [
 		name: 'offset',
 		type: 'number' as NodePropertyTypes,
 		default: 10,
-		description: 'Number of messages per page',
+		description: 'Maximum canonical message rows returned on this page',
 		displayOptions: {
 			show: {
 				resource: ['chat-api'],
