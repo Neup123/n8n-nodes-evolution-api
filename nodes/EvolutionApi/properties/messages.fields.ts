@@ -17,12 +17,13 @@ export const messagesFields: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Recipient Number',
+		displayName: 'Recipient Number or JID',
 		name: 'remoteJid',
 		type: 'string',
 		default: '',
 		required: true,
-		description: 'Recipient RemoteJid',
+		description:
+			'Use a phone number or full WhatsApp JID. For username-only contacts, use the authoritative @lid returned by WhatsApp; do not enter raw @username.',
 		displayOptions: {
 			show: {
 				resource: ['messages-api'],

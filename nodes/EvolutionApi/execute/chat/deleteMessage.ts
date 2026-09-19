@@ -13,6 +13,17 @@ export async function deleteMessage(ef: IExecuteFunctions) {
 		const messageId = ef.getNodeParameter('messageId', 0) as string;
 		const fromMe = ef.getNodeParameter('fromMe', 0) as boolean;
 
+		const validRemoteJid =
+			/^(?:\d+@(?:s\.whatsapp\.net|lid)|\d+-\d+@g\.us|status@broadcast|[^@\s]+@broadcast)$/.test(
+				remoteJid,
+			);
+		if (!validRemoteJid) {
+			throw new NodeOperationError(ef.getNode(), 'Invalid WhatsApp remote JID', {
+				description:
+					'remoteJid must be a full WhatsApp JID, not an Evolution database row ID. Use the message key remoteJid and keep the message ID in Message ID.',
+			});
+		}
+
 		const body = {
 			id: messageId,
 			remoteJid,

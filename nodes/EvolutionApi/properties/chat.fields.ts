@@ -204,7 +204,7 @@ export const chatFields: INodeProperties[] = [
 		type: 'string' as NodePropertyTypes,
 		default: '',
 		required: true,
-		description: 'Contact number',
+		description: 'Full WhatsApp remoteJid from the message key, not an Evolution database row ID',
 		displayOptions: {
 			show: {
 				resource: ['chat-api'],
