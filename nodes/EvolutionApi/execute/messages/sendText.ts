@@ -14,6 +14,7 @@ export async function sendText(ef: IExecuteFunctions) {
 	for (let i = 0; i < items.length; i++) {
 		try {
 			const instanceName = ef.getNodeParameter('instanceName', i) as string;
+			const settingsTemplateId = ef.getNodeParameter('settingsTemplateId', i, '') as string;
 			const remoteJid = ef.getNodeParameter('remoteJid', i) as string;
 			const messageText = ef.getNodeParameter('messageText', i) as string;
 
@@ -40,6 +41,7 @@ export async function sendText(ef: IExecuteFunctions) {
 			};
 
 			const body: any = {
+				...(settingsTemplateId ? { settingsTemplateId } : {}),
 				number: remoteJid,
 				text: messageText,
 			};

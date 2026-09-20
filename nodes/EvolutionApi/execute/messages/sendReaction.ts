@@ -10,6 +10,7 @@ export async function sendReaction(ef: IExecuteFunctions) {
 	try {
 		// Required parameters
 		const instanceName = ef.getNodeParameter('instanceName', 0) as string;
+		const settingsTemplateId = ef.getNodeParameter('settingsTemplateId', 0, '') as string;
 		const remoteJid = ef.getNodeParameter('remoteJid', 0) as string;
 		const messageId = ef.getNodeParameter('messageId', 0) as string;
 		const fromMe = ef.getNodeParameter('fromMe', 0) as boolean;
@@ -33,6 +34,7 @@ export async function sendReaction(ef: IExecuteFunctions) {
 		}
 
 		const body: any = {
+			...(settingsTemplateId ? { settingsTemplateId } : {}),
 			key: {
 				remoteJid,
 				fromMe,

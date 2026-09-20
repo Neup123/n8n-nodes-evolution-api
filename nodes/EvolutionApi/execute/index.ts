@@ -67,6 +67,7 @@ import { joinGroup } from './groups/joinGroup';
 import { executeBaileysMethod } from './baileys/invokeBaileys';
 import { baileysMethodNames } from '../properties/baileys.operations';
 import { archiveOperation } from './archive/archiveOperation';
+import { settingsTemplateOperation } from './settingsTemplates/settingsTemplateOperation';
 type ResourceOperationFunctions = {
 	[resource: string]: {
 		[operation: string]: (ef: IExecuteFunctions) => Promise<any>;
@@ -75,6 +76,11 @@ type ResourceOperationFunctions = {
 
 // Map every resource and operation to its execution function.
 export const resourceOperationsFunctions: ResourceOperationFunctions = {
+	'settings-templates-api': Object.fromEntries(
+		['create', 'edit', 'duplicate', 'delete', 'list', 'assign', 'unassign', 'bindings'].map(
+			(operation) => [operation, settingsTemplateOperation],
+		),
+	),
 	'archive-api': Object.fromEntries(
 		[
 			'status',

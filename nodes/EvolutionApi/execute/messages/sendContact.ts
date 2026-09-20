@@ -10,6 +10,7 @@ export async function sendContact(ef: IExecuteFunctions) {
 	try {
 		// Required parameters
 		const instanceName = ef.getNodeParameter('instanceName', 0);
+		const settingsTemplateId = ef.getNodeParameter('settingsTemplateId', 0, '') as string;
 		const remoteJid = ef.getNodeParameter('remoteJid', 0);
 		const contacts = ef.getNodeParameter('contacts.contactValues', 0) as {
 			fullName: string;
@@ -38,8 +39,9 @@ export async function sendContact(ef: IExecuteFunctions) {
 		}
 
 		const body: any = {
+			...(settingsTemplateId ? { settingsTemplateId } : {}),
 			number: remoteJid,
-			contact: contacts.map(contact => ({
+			contact: contacts.map((contact) => ({
 				fullName: contact.fullName,
 				wuid: contact.wuid,
 				phoneNumber: contact.phoneNumber,

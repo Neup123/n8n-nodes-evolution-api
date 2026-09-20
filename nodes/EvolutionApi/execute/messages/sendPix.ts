@@ -10,6 +10,7 @@ export async function sendPix(ef: IExecuteFunctions) {
 	try {
 		// Required parameters
 		const instanceName = ef.getNodeParameter('instanceName', 0) as string;
+		const settingsTemplateId = ef.getNodeParameter('settingsTemplateId', 0, '') as string;
 		const remoteJid = ef.getNodeParameter('remoteJid', 0) as string;
 		const name = ef.getNodeParameter('name', 0) as string;
 		const keyType = ef.getNodeParameter('keyType', 0) as string;
@@ -34,6 +35,7 @@ export async function sendPix(ef: IExecuteFunctions) {
 		}
 
 		const body: any = {
+			...(settingsTemplateId ? { settingsTemplateId } : {}),
 			number: remoteJid,
 			buttons: [
 				{
