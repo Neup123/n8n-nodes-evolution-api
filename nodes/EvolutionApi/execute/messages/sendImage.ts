@@ -15,6 +15,7 @@ export async function sendImage(ef: IExecuteFunctions) {
 		try {
 			// Required parameters
 			const instanceName = ef.getNodeParameter('instanceName', i) as string;
+			const settingsTemplateId = ef.getNodeParameter('settingsTemplateId', i, '') as string;
 			const remoteJid = ef.getNodeParameter('remoteJid', i) as string;
 			const media = ef.getNodeParameter('media', i) as string;
 
@@ -40,6 +41,7 @@ export async function sendImage(ef: IExecuteFunctions) {
 			};
 
 			const body: any = {
+				...(settingsTemplateId ? { settingsTemplateId } : {}),
 				number: remoteJid,
 				mediatype: 'image',
 				media: media,
@@ -66,9 +68,10 @@ export async function sendImage(ef: IExecuteFunctions) {
 				if (mentionsEveryOne) {
 					body.mentionsEveryOne = true;
 				} else if (mentioned) {
-					const mentionedNumbers = mentioned.split(',')
-						.map(num => num.trim())
-						.map(num => num.includes('@s.whatsapp.net') ? num : `${num}@s.whatsapp.net`);
+					const mentionedNumbers = mentioned
+						.split(',')
+						.map((num) => num.trim())
+						.map((num) => (num.includes('@s.whatsapp.net') ? num : `${num}@s.whatsapp.net`));
 
 					body.mentioned = mentionedNumbers;
 				}

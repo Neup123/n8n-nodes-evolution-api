@@ -10,6 +10,7 @@ export async function sendAudio(ef: IExecuteFunctions) {
 	try {
 		// Required parameters
 		const instanceName = ef.getNodeParameter('instanceName', 0) as string;
+		const settingsTemplateId = ef.getNodeParameter('settingsTemplateId', 0, '') as string;
 		const remoteJid = ef.getNodeParameter('remoteJid', 0) as string;
 		const media = ef.getNodeParameter('media', 0) as string;
 
@@ -34,6 +35,7 @@ export async function sendAudio(ef: IExecuteFunctions) {
 		};
 
 		const body: any = {
+			...(settingsTemplateId ? { settingsTemplateId } : {}),
 			number: remoteJid,
 			audio: media,
 			mimetype: mimetype,
@@ -58,9 +60,10 @@ export async function sendAudio(ef: IExecuteFunctions) {
 			if (mentionsEveryOne) {
 				body.mentionsEveryOne = true;
 			} else if (mentioned) {
-				const mentionedNumbers = mentioned.split(',')
-					.map(num => num.trim())
-					.map(num => num.includes('@s.whatsapp.net') ? num : `${num}@s.whatsapp.net`);
+				const mentionedNumbers = mentioned
+					.split(',')
+					.map((num) => num.trim())
+					.map((num) => (num.includes('@s.whatsapp.net') ? num : `${num}@s.whatsapp.net`));
 
 				body.mentioned = mentionedNumbers;
 			}

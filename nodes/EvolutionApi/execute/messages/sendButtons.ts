@@ -10,6 +10,7 @@ export async function sendButtons(ef: IExecuteFunctions) {
 	try {
 		// Required parameters
 		const instanceName = ef.getNodeParameter('instanceName', 0) as string;
+		const settingsTemplateId = ef.getNodeParameter('settingsTemplateId', 0, '') as string;
 		const remoteJid = ef.getNodeParameter('remoteJid', 0) as string;
 		const title = ef.getNodeParameter('title', 0) as string;
 		const description = ef.getNodeParameter('description', 0) as string;
@@ -57,10 +58,11 @@ export async function sendButtons(ef: IExecuteFunctions) {
 		};
 
 		const body: any = {
+			...(settingsTemplateId ? { settingsTemplateId } : {}),
 			number: remoteJid,
 			title,
 			description,
-			buttons: buttons.map(button => {
+			buttons: buttons.map((button) => {
 				const baseButton = {
 					type: button.type,
 					displayText: button.displayText,
@@ -100,8 +102,8 @@ export async function sendButtons(ef: IExecuteFunctions) {
 			} else if (mentioned) {
 				const mentionedNumbers = mentioned
 					.split(',')
-					.map(num => num.trim())
-					.map(num => (num.includes('@s.whatsapp.net') ? num : `${num}@s.whatsapp.net`));
+					.map((num) => num.trim())
+					.map((num) => (num.includes('@s.whatsapp.net') ? num : `${num}@s.whatsapp.net`));
 
 				body.mentioned = mentionedNumbers;
 			}

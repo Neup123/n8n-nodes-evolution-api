@@ -11,6 +11,7 @@ export async function sendDocument(ef: IExecuteFunctions) {
 	try {
 		// Required parameters
 		const instanceName = ef.getNodeParameter('instanceName', 0) as string;
+		const settingsTemplateId = ef.getNodeParameter('settingsTemplateId', 0, '') as string;
 		const remoteJid = ef.getNodeParameter('remoteJid', 0) as string;
 		const media = ef.getNodeParameter('media', 0) as string;
 
@@ -23,9 +24,11 @@ export async function sendDocument(ef: IExecuteFunctions) {
 		}
 
 		// Optional parameters with default values
-		const mimetype = (ef.getNodeParameter('mimetype', 0, 'application/pdf') as string) || 'application/pdf';
+		const mimetype =
+			(ef.getNodeParameter('mimetype', 0, 'application/pdf') as string) || 'application/pdf';
 		const caption = ef.getNodeParameter('caption', 0, '') as string;
-		const fileName = (ef.getNodeParameter('fileName', 0, 'document.pdf') as string) || 'document.pdf';
+		const fileName =
+			(ef.getNodeParameter('fileName', 0, 'document.pdf') as string) || 'document.pdf';
 
 		// Additional options
 		const options = ef.getNodeParameter('options_message', 0, {}) as {
@@ -44,6 +47,7 @@ export async function sendDocument(ef: IExecuteFunctions) {
 		};
 
 		const body: any = {
+			...(settingsTemplateId ? { settingsTemplateId } : {}),
 			number: remoteJid,
 			media: media,
 			mediatype: 'document',
@@ -70,9 +74,10 @@ export async function sendDocument(ef: IExecuteFunctions) {
 			if (mentionsEveryOne) {
 				body.mentionsEveryOne = true;
 			} else if (mentioned) {
-				const mentionedNumbers = mentioned.split(',')
-					.map(num => num.trim())
-					.map(num => num.includes('@s.whatsapp.net') ? num : `${num}@s.whatsapp.net`);
+				const mentionedNumbers = mentioned
+					.split(',')
+					.map((num) => num.trim())
+					.map((num) => (num.includes('@s.whatsapp.net') ? num : `${num}@s.whatsapp.net`));
 
 				body.mentioned = mentionedNumbers;
 			}

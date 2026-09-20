@@ -10,6 +10,7 @@ export async function sendPoll(ef: IExecuteFunctions) {
 	try {
 		// Required parameters
 		const instanceName = ef.getNodeParameter('instanceName', 0);
+		const settingsTemplateId = ef.getNodeParameter('settingsTemplateId', 0, '') as string;
 		const remoteJid = ef.getNodeParameter('remoteJid', 0);
 		const pollTitle = ef.getNodeParameter('caption', 0);
 		const options = ef.getNodeParameter('options_display.metadataValues', 0) as {
@@ -46,6 +47,7 @@ export async function sendPoll(ef: IExecuteFunctions) {
 		}
 
 		const body: any = {
+			...(settingsTemplateId ? { settingsTemplateId } : {}),
 			number: remoteJid,
 			name: pollTitle,
 			selectableCount: 1,

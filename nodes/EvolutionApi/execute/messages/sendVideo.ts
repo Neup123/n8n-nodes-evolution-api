@@ -10,6 +10,7 @@ export async function sendVideo(ef: IExecuteFunctions) {
 	try {
 		// Required parameters
 		const instanceName = ef.getNodeParameter('instanceName', 0) as string;
+		const settingsTemplateId = ef.getNodeParameter('settingsTemplateId', 0, '') as string;
 		const remoteJid = ef.getNodeParameter('remoteJid', 0) as string;
 		const media = ef.getNodeParameter('media', 0) as string;
 
@@ -35,6 +36,7 @@ export async function sendVideo(ef: IExecuteFunctions) {
 		};
 
 		const body: any = {
+			...(settingsTemplateId ? { settingsTemplateId } : {}),
 			number: remoteJid,
 			mediatype: 'video',
 			media: media,
@@ -61,9 +63,10 @@ export async function sendVideo(ef: IExecuteFunctions) {
 			if (mentionsEveryOne) {
 				body.mentionsEveryOne = true;
 			} else if (mentioned) {
-				const mentionedNumbers = mentioned.split(',')
-					.map(num => num.trim())
-					.map(num => num.includes('@s.whatsapp.net') ? num : `${num}@s.whatsapp.net`);
+				const mentionedNumbers = mentioned
+					.split(',')
+					.map((num) => num.trim())
+					.map((num) => (num.includes('@s.whatsapp.net') ? num : `${num}@s.whatsapp.net`));
 
 				body.mentioned = mentionedNumbers;
 			}

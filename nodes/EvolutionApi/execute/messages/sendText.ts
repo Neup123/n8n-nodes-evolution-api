@@ -14,8 +14,16 @@ export async function sendText(ef: IExecuteFunctions) {
 	for (let i = 0; i < items.length; i++) {
 		try {
 			const instanceName = ef.getNodeParameter('instanceName', i) as string;
+			const settingsTemplateId = ef.getNodeParameter('settingsTemplateId', i, '') as string;
 			const remoteJid = ef.getNodeParameter('remoteJid', i) as string;
 			const messageText = ef.getNodeParameter('messageText', i) as string;
+
+			if (/^@[^@\s]+$/.test(remoteJid.trim())) {
+				throw new NodeOperationError(ef.getNode(), 'Username resolution required', {
+					description:
+						'A raw @username is not a message destination. Resolve it to the authoritative @lid returned by WhatsApp, then pass that full JID.',
+				});
+			}
 			const options = ef.getNodeParameter('options_message', i, {}) as {
 				delay?: number;
 				linkPreview?: boolean;
@@ -33,6 +41,7 @@ export async function sendText(ef: IExecuteFunctions) {
 			};
 
 			const body: any = {
+				...(settingsTemplateId ? { settingsTemplateId } : {}),
 				number: remoteJid,
 				text: messageText,
 			};
@@ -59,9 +68,10 @@ export async function sendText(ef: IExecuteFunctions) {
 				if (mentionsEveryOne) {
 					body.mentionsEveryOne = true;
 				} else if (mentioned) {
-					const mentionedNumbers = mentioned.split(',')
-						.map(num => num.trim())
-						.map(num => num.includes('@s.whatsapp.net') ? num : `${num}@s.whatsapp.net`);
+					const mentionedNumbers = mentioned
+						.split(',')
+						.map((num) => num.trim())
+						.map((num) => (num.includes('@s.whatsapp.net') ? num : `${num}@s.whatsapp.net`));
 
 					body.mentioned = mentionedNumbers;
 				}

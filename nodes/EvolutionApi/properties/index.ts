@@ -17,6 +17,8 @@ import { chatFields } from './chat.fields';
 import { chatOperations } from './chat.operations';
 import { profileFields } from './profile.fields';
 import { profileOperationsOptions } from './profile.operations';
+import { settingsTemplatesOperations } from './settingsTemplates.operations';
+import { settingsTemplatesFields } from './settingsTemplates.fields';
 
 const resourcesOptions: INodeProperties = {
 	displayName: 'Resource',
@@ -76,6 +78,7 @@ const resourcesOptions: INodeProperties = {
 			name: 'Baileys: Advanced Protocol',
 			value: baileysResourceByGroup.advanced,
 		},
+		{ name: 'Settings Template', value: 'settings-templates-api' },
 		{
 			name: 'Event',
 			value: 'events-api',
@@ -102,6 +105,7 @@ export const evolutionNodeProperties = [
 	integrationsOperationsOptions,
 	// Available functions when "Profile" resource is selected
 	profileOperationsOptions,
+	settingsTemplatesOperations,
 	archiveOperations,
 	...baileysOperations,
 	// Available functions when "Chat" resource is selected
@@ -114,6 +118,7 @@ export const evolutionNodeProperties = [
 	...integrationsFields,
 	...chatFields,
 	...profileFields,
+	...settingsTemplatesFields,
 	...baileysFields,
 	...archiveFields,
 ];

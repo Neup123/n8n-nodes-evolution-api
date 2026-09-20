@@ -10,6 +10,7 @@ export async function sendStories(ef: IExecuteFunctions) {
 	try {
 		// Required parameters
 		const instanceName = ef.getNodeParameter('instanceName', 0) as string;
+		const settingsTemplateId = ef.getNodeParameter('settingsTemplateId', 0, '') as string;
 		const content = ef.getNodeParameter('content', 0) as string;
 		const type = ef.getNodeParameter('type', 0) as 'text' | 'image' | 'video' | 'audio';
 		const caption = ef.getNodeParameter('caption', 0, '') as string;
@@ -35,11 +36,12 @@ export async function sendStories(ef: IExecuteFunctions) {
 		}
 
 		const body: any = {
+			...(settingsTemplateId ? { settingsTemplateId } : {}),
 			type,
 			content,
 			backgroundColor,
 			font,
-			allContacts
+			allContacts,
 		};
 
 		// Add a caption only for images or videos
@@ -51,9 +53,10 @@ export async function sendStories(ef: IExecuteFunctions) {
 		if (!allContacts) {
 			const statusJidList = ef.getNodeParameter('statusJidList', 0, '') as string;
 			if (statusJidList) {
-				body.statusJidList = statusJidList.split(',')
-					.map(num => num.trim())
-					.map(num => num.includes('@s.whatsapp.net') ? num : `${num}@s.whatsapp.net`);
+				body.statusJidList = statusJidList
+					.split(',')
+					.map((num) => num.trim())
+					.map((num) => (num.includes('@s.whatsapp.net') ? num : `${num}@s.whatsapp.net`));
 			}
 		}
 

@@ -1,6 +1,15 @@
 import { INodeProperties } from 'n8n-workflow';
 
 export const messagesFields: INodeProperties[] = [
+	{
+		displayName: 'Settings Template ID',
+		name: 'settingsTemplateId',
+		type: 'string',
+		default: '',
+		description:
+			'Optional per-request template override. It has higher precedence than matching group/contact and instance defaults.',
+		displayOptions: { show: { resource: ['messages-api'] } },
+	},
 	// Fields = Send text message
 	{
 		displayName: 'Instance Name',
@@ -17,12 +26,13 @@ export const messagesFields: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Recipient Number',
+		displayName: 'Recipient Number or JID',
 		name: 'remoteJid',
 		type: 'string',
 		default: '',
 		required: true,
-		description: 'Recipient RemoteJid',
+		description:
+			'Use a phone number or full WhatsApp JID. For username-only contacts, use the authoritative @lid returned by WhatsApp; do not enter raw @username.',
 		displayOptions: {
 			show: {
 				resource: ['messages-api'],
@@ -426,7 +436,8 @@ export const messagesFields: INodeProperties[] = [
 										mentionsEveryOne: [false],
 									},
 								},
-								description: 'Enter the numbers you want to mention separated by commas (ex: 5511999999999,5511888888888)',
+								description:
+									'Enter the numbers you want to mention separated by commas (ex: 5511999999999,5511888888888)',
 							},
 						],
 					},
@@ -725,7 +736,8 @@ export const messagesFields: INodeProperties[] = [
 										mentionsEveryOne: [false],
 									},
 								},
-								description: 'Enter the numbers you want to mention separated by commas (ex: 5511999999999,5511888888888)',
+								description:
+									'Enter the numbers you want to mention separated by commas (ex: 5511999999999,5511888888888)',
 							},
 						],
 					},
@@ -903,7 +915,8 @@ export const messagesFields: INodeProperties[] = [
 										mentionsEveryOne: [false],
 									},
 								},
-								description: 'Enter the numbers you want to mention separated by commas (ex: 5511999999999,5511888888888)',
+								description:
+									'Enter the numbers you want to mention separated by commas (ex: 5511999999999,5511888888888)',
 							},
 						],
 					},
@@ -1188,7 +1201,8 @@ export const messagesFields: INodeProperties[] = [
 										mentionsEveryOne: [false],
 									},
 								},
-								description: 'Enter the numbers you want to mention separated by commas (ex: 5511999999999,5511888888888)',
+								description:
+									'Enter the numbers you want to mention separated by commas (ex: 5511999999999,5511888888888)',
 							},
 						],
 					},
@@ -1442,20 +1456,20 @@ export const messagesFields: INodeProperties[] = [
 										type: 'string',
 										default: '',
 										description: 'Unique ID of the option',
-									}
-								]
-							}
-						]
-					}
-				]
-			}
+									},
+								],
+							},
+						],
+					},
+				],
+			},
 		],
 		displayOptions: {
 			show: {
 				resource: ['messages-api'],
 				operation: ['send-list'],
 			},
-		}
+		},
 	},
 	{
 		displayName: 'Options',
@@ -1534,7 +1548,8 @@ export const messagesFields: INodeProperties[] = [
 										mentionsEveryOne: [false],
 									},
 								},
-								description: 'Enter the numbers you want to mention separated by commas (ex: 5511999999999,5511888888888)',
+								description:
+									'Enter the numbers you want to mention separated by commas (ex: 5511999999999,5511888888888)',
 							},
 						],
 					},
@@ -1917,5 +1932,5 @@ export const messagesFields: INodeProperties[] = [
 				operation: ['send-reaction'],
 			},
 		},
-	}
+	},
 ];

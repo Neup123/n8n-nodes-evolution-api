@@ -10,6 +10,7 @@ export async function sendList(ef: IExecuteFunctions) {
 	try {
 		// Required parameters
 		const instanceName = ef.getNodeParameter('instanceName', 0);
+		const settingsTemplateId = ef.getNodeParameter('settingsTemplateId', 0, '') as string;
 		const remoteJid = ef.getNodeParameter('remoteJid', 0);
 		const title = ef.getNodeParameter('title', 0);
 		const description = ef.getNodeParameter('description', 0);
@@ -60,19 +61,20 @@ export async function sendList(ef: IExecuteFunctions) {
 		};
 
 		const body: any = {
+			...(settingsTemplateId ? { settingsTemplateId } : {}),
 			number: remoteJid,
 			title,
 			description,
 			buttonText,
 			footerText: options.footer || '',
-			sections: sections.map(section => ({
+			sections: sections.map((section) => ({
 				title: section.title,
-				rows: section.rows.rowValues.map(row => ({
+				rows: section.rows.rowValues.map((row) => ({
 					title: row.title,
 					description: row.description || '',
-					rowId: row.rowId || `${section.title}_${row.title}`
-				}))
-			}))
+					rowId: row.rowId || `${section.title}_${row.title}`,
+				})),
+			})),
 		};
 
 		if (options.delay) body.delay = options.delay;
@@ -93,8 +95,8 @@ export async function sendList(ef: IExecuteFunctions) {
 			} else if (mentioned) {
 				const mentionedNumbers = mentioned
 					.split(',')
-					.map(num => num.trim())
-					.map(num => num.includes('@s.whatsapp.net') ? num : `${num}@s.whatsapp.net`);
+					.map((num) => num.trim())
+					.map((num) => (num.includes('@s.whatsapp.net') ? num : `${num}@s.whatsapp.net`));
 
 				body.mentioned = mentionedNumbers;
 			}

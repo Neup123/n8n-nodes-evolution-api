@@ -17,9 +17,9 @@ The duplicated **Baileys: All Methods (Legacy)** selector has been removed. Exis
 
 ```json
 {
-  "jid": "120363000000000000@g.us",
-  "participants": ["5511999999999@s.whatsapp.net"],
-  "action": "add"
+	"jid": "120363000000000000@g.us",
+	"participants": ["5511999999999@s.whatsapp.net"],
+	"action": "add"
 }
 ```
 
@@ -91,7 +91,7 @@ services:
     image: ghcr.io/neup123/n8n-evolution-api:latest
     restart: unless-stopped
     ports:
-      - "5678:5678"
+      - '5678:5678'
     volumes:
       - n8n_data:/home/node/.n8n
 
@@ -103,3 +103,6 @@ volumes:
 
 This project is based on the [n8n-nodes-evolution-api](https://github.com/oriondesign2015/n8n-nodes-evolution-api) by [OrionDesign](https://github.com/oriondesign2015).
 
+## Evolution API 5.2 settings templates
+
+See [settings-template compatibility](./docs/settings-template-compatibility.md) for precedence, assignment operations, and per-request overrides.
