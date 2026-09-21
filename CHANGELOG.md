@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.3.0 - 2026-09-21
+
+- Added guided create, edit, duplicate, delete, list, assign, and unassign operations for shared settings templates.
+- Added optional settings-template selection to supported message-send operations.
+- Validated phone numbers and full WhatsApp PN, LID, group, status, and broadcast identifiers before sending.
+- Added Chat → Delete Message using the complete original WhatsApp message key.
+- Requires Evolution API 5.2.0 or later for settings-template operations.
+
 ## 4.2.0 - 2026-09-16
 
 - Added a 1–100% near-duplicate similarity threshold to Instances → Set Behavior.
