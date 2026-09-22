@@ -11,7 +11,15 @@ export async function deleteMessage(ef: IExecuteFunctions) {
 		const instanceName = ef.getNodeParameter('instanceName', 0) as string;
 		const remoteJid = ef.getNodeParameter('remoteJid', 0) as string;
 		const messageId = ef.getNodeParameter('messageId', 0) as string;
-		const fromMe = ef.getNodeParameter('fromMe', 0) as boolean;
+		const messageSource = ef.getNodeParameter('messageSource', 0, 'auto') as string;
+		const participant = ef.getNodeParameter('participant', 0, '') as string;
+		const participantAlt = ef.getNodeParameter('participantAlt', 0, '') as string;
+		const fromMe =
+			messageSource === 'connected-account'
+				? true
+				: messageSource === 'group-participant'
+					? false
+					: undefined;
 
 		const validRemoteJid =
 			/^(?:\d+@(?:s\.whatsapp\.net|lid)|\d+-\d+@g\.us|status@broadcast|[^@\s]+@broadcast)$/.test(
@@ -27,7 +35,9 @@ export async function deleteMessage(ef: IExecuteFunctions) {
 		const body = {
 			id: messageId,
 			remoteJid,
-			fromMe,
+			...(fromMe !== undefined ? { fromMe } : {}),
+			...(participant ? { participant } : {}),
+			...(participantAlt ? { participantAlt } : {}),
 		};
 
 		const requestOptions: IRequestOptions = {
@@ -38,9 +48,28 @@ export async function deleteMessage(ef: IExecuteFunctions) {
 		};
 
 		const response = await evolutionRequest(ef, requestOptions);
+		const responseStatus = response?.deletion?.status ?? response?.status;
+		const serverAcknowledged =
+			response?.deletion?.serverAcknowledged === true ||
+			responseStatus === 'SERVER_ACK' ||
+			responseStatus === 'DELIVERY_ACK' ||
+			responseStatus === 'READ' ||
+			(typeof responseStatus === 'number' && responseStatus >= 2);
+		if (!serverAcknowledged) {
+			throw new NodeOperationError(
+				ef.getNode(),
+				'WhatsApp did not confirm the delete-for-everyone request',
+				{
+					description:
+						'The API only returned a pending submission. The message was not confirmed as deleted. Update Evolution API to a release that waits for the WhatsApp server acknowledgement.',
+				},
+			);
+		}
 		return {
 			json: {
-				success: true,
+				success: serverAcknowledged,
+				serverAcknowledged,
+				status: responseStatus,
 				data: response,
 			},
 		};

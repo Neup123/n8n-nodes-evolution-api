@@ -41,6 +41,8 @@ See the [local-first workflow guide](docs/local-first-reads.md) for supported op
 
 **Chat → Search Messages** returns the canonical local message record from Evolution API 5.1, including PN/LID aliases, origin, monotonic evidence state, acknowledgement timestamps, and `MessageUpdate[]`. A successful API send or `SERVER_ACK` is not proof of delivery; workflows should require `DELIVERY_ACK`, `READ`, or `PLAYED`. See the [operational message integrity node guide](docs/message-archive-integrity.md).
 
+**Chat → Delete Message** automatically detects whether the archived message belongs to the connected account or another group participant, selects group-admin deletion when applicable, and rejects unconfirmed `PENDING` submissions. See the [Delete Message node guide](docs/delete-message.md).
+
 For participant webhooks, an `@lid` value is not a phone number. Evolution API 5.1 exposes a verified PN as `participantsData[].phoneNumber` only when WhatsApp supplied the mapping; otherwise it is `null` and `identityResolved` is `false`. The same guide documents every normalized identity field.
 
 **Instances → Set Behavior** also exposes the API's complete Automation Safety & Pacing policy: bounded typing indicators, instance/recipient rate limits, quiet hours, suppression and optional recipient allowlisting, configurable exact/near-duplicate blocking, failure pauses, and audit retention. The policy applies centrally, so normal message nodes require no extra pacing fields and message content is never rewritten. See the [n8n policy guide](docs/outbound-automation-safety.md) and [API policy reference](https://github.com/Neup123/evolution-api/blob/main/docs/outbound-automation-safety.md).
