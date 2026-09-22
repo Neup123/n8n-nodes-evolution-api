@@ -227,16 +227,67 @@ export const chatFields: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Is My Message',
-		name: 'fromMe',
-		type: 'boolean' as NodePropertyTypes,
-		default: false,
+		displayName: 'Message Ownership',
+		name: 'messageSource',
+		type: 'options' as NodePropertyTypes,
+		options: [
+			{
+				name: 'Auto Detect',
+				value: 'auto',
+				description:
+					'Use the archived original key, or infer the mode from the chat and participant JID',
+			},
+			{
+				name: 'This WhatsApp Account',
+				value: 'connected-account',
+				description: 'Delete a message sent by the connected WhatsApp account',
+			},
+			{
+				name: 'Another Group Participant',
+				value: 'group-participant',
+				description: 'Admin-only: delete a message sent by another participant in a group',
+			},
+		],
+		default: 'auto',
 		required: true,
-		description: 'If the message was sent by the instance',
+		description:
+			'How to determine who sent the original message. Auto Detect is recommended. WhatsApp does not allow deleting another person’s direct message for everyone',
 		displayOptions: {
 			show: {
 				resource: ['chat-api'],
 				operation: ['delete-message'],
+			},
+		},
+	},
+	{
+		displayName: 'Original Participant JID',
+		name: 'participant',
+		type: 'string' as NodePropertyTypes,
+		default: '',
+		placeholder: '184353602666626@lid',
+		description:
+			'The participant value from the original webhook message key. Required for group-admin deletion when the Evolution message archive cannot resolve the message ID.',
+		displayOptions: {
+			show: {
+				resource: ['chat-api'],
+				operation: ['delete-message'],
+				messageSource: ['auto', 'group-participant'],
+			},
+		},
+	},
+	{
+		displayName: 'Participant Alternate JID',
+		name: 'participantAlt',
+		type: 'string' as NodePropertyTypes,
+		default: '',
+		placeholder: '972500000000@s.whatsapp.net',
+		description:
+			'Optional alternate participant identity from key.participantAlt, normally the phone-number JID when Participant JID is an LID',
+		displayOptions: {
+			show: {
+				resource: ['chat-api'],
+				operation: ['delete-message'],
+				messageSource: ['auto', 'group-participant'],
 			},
 		},
 	},
