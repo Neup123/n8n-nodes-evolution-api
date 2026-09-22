@@ -11,15 +11,10 @@ export async function deleteMessage(ef: IExecuteFunctions) {
 		const instanceName = ef.getNodeParameter('instanceName', 0) as string;
 		const remoteJid = ef.getNodeParameter('remoteJid', 0) as string;
 		const messageId = ef.getNodeParameter('messageId', 0) as string;
-		const messageSource = ef.getNodeParameter('messageSource', 0, 'auto') as string;
 		const participant = ef.getNodeParameter('participant', 0, '') as string;
 		const participantAlt = ef.getNodeParameter('participantAlt', 0, '') as string;
-		const fromMe =
-			messageSource === 'connected-account'
-				? true
-				: messageSource === 'group-participant'
-					? false
-					: undefined;
+		const messageTimestamp = ef.getNodeParameter('messageTimestamp', 0, 0) as number;
+		const deleteMedia = ef.getNodeParameter('deleteMedia', 0, true) as boolean;
 
 		const validRemoteJid =
 			/^(?:\d+@(?:s\.whatsapp\.net|lid)|\d+-\d+@g\.us|status@broadcast|[^@\s]+@broadcast)$/.test(
@@ -35,9 +30,10 @@ export async function deleteMessage(ef: IExecuteFunctions) {
 		const body = {
 			id: messageId,
 			remoteJid,
-			...(fromMe !== undefined ? { fromMe } : {}),
 			...(participant ? { participant } : {}),
 			...(participantAlt ? { participantAlt } : {}),
+			...(messageTimestamp > 0 ? { messageTimestamp } : {}),
+			deleteMedia,
 		};
 
 		const requestOptions: IRequestOptions = {
@@ -49,26 +45,31 @@ export async function deleteMessage(ef: IExecuteFunctions) {
 
 		const response = await evolutionRequest(ef, requestOptions);
 		const responseStatus = response?.deletion?.status ?? response?.status;
+		const deletionScope = response?.deletion?.scope;
 		const serverAcknowledged =
 			response?.deletion?.serverAcknowledged === true ||
 			responseStatus === 'SERVER_ACK' ||
 			responseStatus === 'DELIVERY_ACK' ||
 			responseStatus === 'READ' ||
 			(typeof responseStatus === 'number' && responseStatus >= 2);
-		if (!serverAcknowledged) {
+		const appStatePatchAccepted =
+			deletionScope === 'ME' && response?.deletion?.appStatePatchAccepted === true;
+		if (!serverAcknowledged && !appStatePatchAccepted) {
 			throw new NodeOperationError(
 				ef.getNode(),
-				'WhatsApp did not confirm the delete-for-everyone request',
+				'WhatsApp did not accept the message deletion',
 				{
 					description:
-						'The API only returned a pending submission. The message was not confirmed as deleted. Update Evolution API to a release that waits for the WhatsApp server acknowledgement.',
+						'The API returned neither a confirmed delete-for-everyone acknowledgement nor an accepted delete-for-me app-state patch.',
 				},
 			);
 		}
 		return {
 			json: {
-				success: serverAcknowledged,
+				success: true,
+				deletionScope,
 				serverAcknowledged,
+				appStatePatchAccepted,
 				status: responseStatus,
 				data: response,
 			},

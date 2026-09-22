@@ -44,7 +44,7 @@ export const chatFields: INodeProperties[] = [
 
 	// Fields for reading messages
 	{
-		displayName: 'Contact',
+		displayName: 'Chat JID (Contact or Group)',
 		name: 'remoteJid',
 		type: 'string' as NodePropertyTypes,
 		default: '',
@@ -204,7 +204,9 @@ export const chatFields: INodeProperties[] = [
 		type: 'string' as NodePropertyTypes,
 		default: '',
 		required: true,
-		description: 'Full WhatsApp remoteJid from the message key, not an Evolution database row ID',
+		placeholder: '120363000000000000@g.us',
+		description:
+			'Exact data.key.remoteJid from the original message. For a group message this must be the group JID, not participant or participantAlt.',
 		displayOptions: {
 			show: {
 				resource: ['chat-api'],
@@ -227,39 +229,6 @@ export const chatFields: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Message Ownership',
-		name: 'messageSource',
-		type: 'options' as NodePropertyTypes,
-		options: [
-			{
-				name: 'Auto Detect',
-				value: 'auto',
-				description:
-					'Use the archived original key, or infer the mode from the chat and participant JID',
-			},
-			{
-				name: 'This WhatsApp Account',
-				value: 'connected-account',
-				description: 'Delete a message sent by the connected WhatsApp account',
-			},
-			{
-				name: 'Another Group Participant',
-				value: 'group-participant',
-				description: 'Admin-only: delete a message sent by another participant in a group',
-			},
-		],
-		default: 'auto',
-		required: true,
-		description:
-			'How to determine who sent the original message. Auto Detect is recommended. WhatsApp does not allow deleting another person’s direct message for everyone',
-		displayOptions: {
-			show: {
-				resource: ['chat-api'],
-				operation: ['delete-message'],
-			},
-		},
-	},
-	{
 		displayName: 'Original Participant JID',
 		name: 'participant',
 		type: 'string' as NodePropertyTypes,
@@ -271,7 +240,6 @@ export const chatFields: INodeProperties[] = [
 			show: {
 				resource: ['chat-api'],
 				operation: ['delete-message'],
-				messageSource: ['auto', 'group-participant'],
 			},
 		},
 	},
@@ -287,7 +255,34 @@ export const chatFields: INodeProperties[] = [
 			show: {
 				resource: ['chat-api'],
 				operation: ['delete-message'],
-				messageSource: ['auto', 'group-participant'],
+			},
+		},
+	},
+	{
+		displayName: 'Message Timestamp',
+		name: 'messageTimestamp',
+		type: 'number' as NodePropertyTypes,
+		default: 0,
+		typeOptions: { minValue: 0 },
+		description:
+			'Original data.messageTimestamp in Unix seconds. Needed for delete-for-me only when Evolution cannot find the stored original message.',
+		displayOptions: {
+			show: {
+				resource: ['chat-api'],
+				operation: ['delete-message'],
+			},
+		},
+	},
+	{
+		displayName: 'Delete Media for This Account',
+		name: 'deleteMedia',
+		type: 'boolean' as NodePropertyTypes,
+		default: true,
+		description: 'Whether delete-for-me also removes locally stored media for the connected account',
+		displayOptions: {
+			show: {
+				resource: ['chat-api'],
+				operation: ['delete-message'],
 			},
 		},
 	},
