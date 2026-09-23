@@ -20,6 +20,7 @@ import { sendContact } from './messages/sendContact';
 import { sendStories } from './messages/sendStories';
 import { sendText } from './messages/sendText';
 import { sendVideo } from './messages/sendVideo';
+import { outboundQueue } from './messages/outboundQueue';
 import { setRabbitMQ } from './events/setRabbitMQ';
 import { setWebhook } from './events/setWebhook';
 import { setDifyBot } from './integrations/setDifyBot';
@@ -133,6 +134,8 @@ export const resourceOperationsFunctions: ResourceOperationFunctions = {
 	},
 	'messages-api': {
 		'send-text': sendText,
+		'outbound-queue': outboundQueue,
+		'clear-outbound-queue': outboundQueue,
 		'send-image': sendImage,
 		'send-video': sendVideo,
 		'send-audio': sendAudio,

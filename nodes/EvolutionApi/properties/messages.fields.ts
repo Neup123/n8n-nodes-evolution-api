@@ -8,7 +8,52 @@ export const messagesFields: INodeProperties[] = [
 		default: '',
 		description:
 			'Optional per-request template override. It has higher precedence than matching group/contact and instance defaults.',
-		displayOptions: { show: { resource: ['messages-api'] } },
+		displayOptions: {
+			show: {
+				resource: ['messages-api'],
+				operation: [
+					'send-text',
+					'send-image',
+					'send-video',
+					'send-audio',
+					'send-document',
+					'send-poll',
+					'send-contact',
+					'send-list',
+					'send-buttons',
+					'send-stories',
+					'send-pix',
+				],
+			},
+		},
+	},
+	{
+		displayName: 'Instance Name',
+		name: 'queueInstanceName',
+		type: 'string',
+		default: '',
+		required: true,
+		description: 'Instance whose internal outbound queue should be inspected or cleared',
+		displayOptions: {
+			show: {
+				resource: ['messages-api'],
+				operation: ['outbound-queue', 'clear-outbound-queue'],
+			},
+		},
+	},
+	{
+		displayName: 'Maximum Items',
+		name: 'queueLimit',
+		type: 'number',
+		default: 100,
+		typeOptions: { minValue: 1, maxValue: 500 },
+		description: 'Maximum queue entries to return; summary counts always cover the complete queue',
+		displayOptions: {
+			show: {
+				resource: ['messages-api'],
+				operation: ['outbound-queue'],
+			},
+		},
 	},
 	// Fields = Send text message
 	{
