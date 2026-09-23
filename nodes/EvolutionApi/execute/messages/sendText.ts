@@ -88,9 +88,15 @@ export async function sendText(ef: IExecuteFunctions) {
 			};
 
 			const response = await evolutionRequest(ef, requestOptions);
+			const queued = response?.queued === true || response?.deliveryStatus === 'PENDING';
 			returnData.push({
 				json: {
-					success: true,
+					requestAccepted: true,
+					success: !queued,
+					messageWasSent: !queued,
+					queued,
+					deliveryStatus: queued ? 'PENDING' : 'SENT',
+					final: !queued,
 					data: response,
 				},
 			});
@@ -112,7 +118,12 @@ export async function sendText(ef: IExecuteFunctions) {
 
 			returnData.push({
 				json: {
+					requestAccepted: false,
 					success: false,
+					messageWasSent: false,
+					queued: false,
+					deliveryStatus: 'FAILED',
+					final: true,
 					error: {
 						message: errorMessage,
 						details: errorDetails,
