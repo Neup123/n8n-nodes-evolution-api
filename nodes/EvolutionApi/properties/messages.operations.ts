@@ -17,8 +17,20 @@ export const messagesOperationsOptions: INodeProperties = {
 			// Send Text
 			name: 'Send Text',
 			action: 'Send text',
-			description: 'Sends a Text message',
+			description: 'Sends text immediately or queues it when a transient Automation Safety limit is active',
 			value: 'send-text',
+		},
+		{
+			name: 'Get Outbound Queue',
+			action: 'Get outbound queue',
+			description: 'Shows queued message count, estimated send times, and when the queue should be empty',
+			value: 'outbound-queue',
+		},
+		{
+			name: 'Clear Outbound Queue',
+			action: 'Clear outbound queue',
+			description: 'Immediately removes queued messages that have not been handed to WhatsApp',
+			value: 'clear-outbound-queue',
 		},
 
 		// Option = Send Image

@@ -49,6 +49,19 @@ Use **Instances → Get Outbound Safety Audit** to retrieve up to 500 newest row
 
 Similarity is calculated from a non-reversible 64-bit character-trigram fingerprint after normalizing Unicode, letter case, and whitespace. It is approximate rather than a literal edit-distance percentage. The original message text and links are never modified. Rows created before the supporting database migration remain eligible for exact matching; near-duplicate matching applies to sends recorded after upgrade.
 
-Policy rejections arrive as HTTP 429. Retry only retryable results such as rate limits or quiet hours; do not automatically retry `recipient_suppressed`, `recipient_not_allowed`, `duplicate_message`, or `outreach_recipient_limit` without changing the campaign window.
+For **Messages → Send Text**, transient cooldown decisions are stored in Evolution API's durable internal queue instead of failing the n8n execution. A queued result contains `queued: true`, its queue ID, position, reason, and estimated send time. Evolution API re-runs the current safety policy before delivery and resumes pending work after restart or WhatsApp reconnection.
+
+Use **Messages → Get Outbound Queue** to return:
+
+- complete pending, processing, and failed counts;
+- the next estimated send time;
+- the estimated time at which the queue will be empty; and
+- individual entries with recipient, reason, attempts, request time, schedule, and last error.
+
+Use **Messages → Clear Outbound Queue** to remove all not-yet-sent entries immediately. A message already handed to WhatsApp cannot be recalled; the response reports whether an entry was processing when the clear request arrived.
+
+The queue is used for concurrency, failure-circuit, instance/recipient minute and daily limits, outreach-recipient limits, and minimum intervals. Permanent policy decisions still fail: `recipient_suppressed`, `recipient_not_allowed`, `quiet_hours`, and `duplicate_message`. Other message types retain their existing HTTP 429 behavior.
+
+Evolution API rejects enqueue with `outbound_queue_instance_capacity` or `outbound_queue_recipient_capacity` only when recent accepted sends plus queued work reach the configured daily limit.
 
 See the [complete Evolution API policy reference](https://github.com/Neup123/evolution-api/blob/main/docs/outbound-automation-safety.md) for defaults, bounds, processing order, and response details.
