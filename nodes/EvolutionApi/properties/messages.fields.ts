@@ -1967,10 +1967,22 @@ export const messagesFields: INodeProperties[] = [
 	{
 		displayName: 'Reaction Emoji',
 		name: 'reaction',
-		type: 'string',
+		type: 'options',
+		options: [
+			{ name: '👍 Thumbs Up', value: '👍' },
+			{ name: '❤️ Heart', value: '❤️' },
+			{ name: '😂 Laughing', value: '😂' },
+			{ name: '😮 Surprised', value: '😮' },
+			{ name: '😢 Sad', value: '😢' },
+			{ name: '🙏 Thank You', value: '🙏' },
+			{ name: '👏 Applause', value: '👏' },
+			{ name: '🔥 Fire', value: '🔥' },
+			{ name: '🎉 Celebration', value: '🎉' },
+			{ name: '👎 Thumbs Down', value: '👎' },
+		],
 		default: '👍',
 		required: true,
-		description: 'Emoji to be used as reaction',
+		description: 'Choose a common reaction, or switch to Expression for any other emoji. Previously saved emoji values are not rewritten.',
 		displayOptions: {
 			show: {
 				resource: ['messages-api'],
