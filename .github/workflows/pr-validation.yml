@@ -1,0 +1,44 @@
+name: Validate n8n node pull requests
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: n8n-node-pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Enable pnpm
+        run: corepack enable
+
+      - name: Install dependencies without lifecycle scripts
+        run: pnpm install --frozen-lockfile --ignore-scripts
+
+      - name: Compile node and copy icons
+        run: pnpm build
+
+      - name: Lint node source
+        run: pnpm lint
+
+      # These audit the compiled node schema and mocked request contracts.
+      # They do not establish runtime compatibility with a connected n8n
+      # editor, a live Evolution API, or any real WhatsApp send operation.
+      - name: Audit Baileys node methods
+        run: pnpm audit:baileys
+
+      - name: Audit archive node methods
+        run: pnpm audit:archive
